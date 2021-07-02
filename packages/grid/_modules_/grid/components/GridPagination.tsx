@@ -81,8 +81,9 @@ export const GridPagination = React.forwardRef<
 
   const rowPerPageOptions = React.useMemo(() => {
     const rawRowsPerPageOptions = options.rowsPerPageOptions ?? [];
-    const hasPageSizeInRowsPerPageOptions =
-      rawRowsPerPageOptions.includes(paginationState.pageSize);
+    const hasPageSizeInRowsPerPageOptions = rawRowsPerPageOptions.includes(
+      paginationState.pageSize,
+    );
 
     if (hasPageSizeInRowsPerPageOptions) {
       return rawRowsPerPageOptions;

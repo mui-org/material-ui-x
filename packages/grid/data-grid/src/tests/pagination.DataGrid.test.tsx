@@ -15,7 +15,11 @@ import {
   DEFAULT_GRID_OPTIONS,
   GridRowsProp,
 } from '@material-ui/data-grid';
+<<<<<<< HEAD
 import { getColumnValues, getRows } from 'test/utils/helperFn';
+=======
+import { getColumnValues } from 'test/utils/helperFn';
+>>>>>>> Run prettier
 import { spy } from 'sinon';
 import { useData } from 'packages/storybook/src/hooks/useData';
 
