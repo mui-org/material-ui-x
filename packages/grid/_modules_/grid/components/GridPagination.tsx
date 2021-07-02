@@ -79,6 +79,28 @@ export const GridPagination = React.forwardRef<
     };
   };
 
+  const rowPerPageOptions = React.useMemo(() => {
+    const rawRowsPerPageOptions = options.rowsPerPageOptions ?? [];
+    const hasPageSizeInRowsPerPageOptions =
+      rawRowsPerPageOptions.includes(paginationState.pageSize);
+
+    if (hasPageSizeInRowsPerPageOptions) {
+      return rawRowsPerPageOptions;
+    }
+
+    const index = rawRowsPerPageOptions.findIndex((option) => option > paginationState.pageSize);
+
+    if (index === -1) {
+      return [...rawRowsPerPageOptions, paginationState.pageSize];
+    }
+
+    return [
+      ...rawRowsPerPageOptions.slice(0, index),
+      paginationState.pageSize,
+      ...rawRowsPerPageOptions.slice(index),
+    ];
+  }, [options.rowsPerPageOptions, paginationState.pageSize]);
+
   return (
     // @ts-ignore TODO remove once upgraded v4 support is dropped
     <TablePagination
@@ -92,12 +114,7 @@ export const GridPagination = React.forwardRef<
       component="div"
       count={paginationState.rowCount}
       page={paginationState.page <= lastPage ? paginationState.page : lastPage}
-      rowsPerPageOptions={
-        options.rowsPerPageOptions &&
-        options.rowsPerPageOptions.indexOf(paginationState.pageSize) > -1
-          ? options.rowsPerPageOptions
-          : []
-      }
+      rowsPerPageOptions={rowPerPageOptions}
       rowsPerPage={paginationState.pageSize}
       {...apiRef!.current.getLocaleText('MuiTablePagination')}
       {...getPaginationChangeHandlers()}
