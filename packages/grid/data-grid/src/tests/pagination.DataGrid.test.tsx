@@ -15,11 +15,7 @@ import {
   DEFAULT_GRID_OPTIONS,
   GridRowsProp,
 } from '@material-ui/data-grid';
-<<<<<<< HEAD
 import { getColumnValues, getRows } from 'test/utils/helperFn';
-=======
-import { getColumnValues } from 'test/utils/helperFn';
->>>>>>> Run prettier
 import { spy } from 'sinon';
 import { useData } from 'packages/storybook/src/hooks/useData';
 
@@ -380,34 +376,6 @@ describe('<DataGrid /> - Pagination', () => {
           expectedViewportRowsLengthAfter,
         );
       });
-    });
-
-    it('should display a warning if the pageSize is not in the rowsPerPageOptions', () => {
-      const pageSize = 12;
-
-      const TestCase = () => {
-        const data = useData(100, 10);
-
-        return (
-          <div style={{ height: 300, width: 400 }}>
-            <DataGrid
-              autoHeight={isJSDOM}
-              columns={data.columns}
-              rows={data.rows}
-              pagination
-              pageSize={pageSize}
-              rowsPerPageOptions={[25, 50, 100]}
-            />
-          </div>
-        );
-      };
-
-      expect(() => {
-        render(<TestCase />);
-        // @ts-expect-error need to migrate helpers to TypeScript
-      }).toWarnDev([
-        `Material-UI: The current pageSize (${pageSize}) is not preset in the rowsPerPageOptions.\nAdd it to show the pagination select.`,
-      ]);
     });
   });
 });
