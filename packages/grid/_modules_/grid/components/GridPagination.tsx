@@ -79,28 +79,20 @@ export const GridPagination = React.forwardRef<
     };
   };
 
-  const rowPerPageOptions = React.useMemo(() => {
-    const rawRowsPerPageOptions = options.rowsPerPageOptions ?? [];
-    const hasPageSizeInRowsPerPageOptions = rawRowsPerPageOptions.includes(
+  const hasPageSizeInRowsPerPageOptions = options.rowsPerPageOptions?.includes(
       paginationState.pageSize,
-    );
+  );
 
-    if (hasPageSizeInRowsPerPageOptions) {
-      return rawRowsPerPageOptions;
+  React.useEffect(() => {
+    if (process.env.NODE_ENV !== 'production' && options.rowsPerPageOptions && !hasPageSizeInRowsPerPageOptions) {
+      console.warn(
+          [
+            `The current pageSize (${paginationState.pageSize}) is not preset in the rowsPerPageOptions.`,
+            `Add it to show the pagination select.`,
+          ].join('\n'),
+      );
     }
-
-    const index = rawRowsPerPageOptions.findIndex((option) => option > paginationState.pageSize);
-
-    if (index === -1) {
-      return [...rawRowsPerPageOptions, paginationState.pageSize];
-    }
-
-    return [
-      ...rawRowsPerPageOptions.slice(0, index),
-      paginationState.pageSize,
-      ...rawRowsPerPageOptions.slice(index),
-    ];
-  }, [options.rowsPerPageOptions, paginationState.pageSize]);
+  }, [options.rowsPerPageOptions, paginationState.pageSize, hasPageSizeInRowsPerPageOptions])
 
   return (
     // @ts-ignore TODO remove once upgraded v4 support is dropped
@@ -115,7 +107,7 @@ export const GridPagination = React.forwardRef<
       component="div"
       count={paginationState.rowCount}
       page={paginationState.page <= lastPage ? paginationState.page : lastPage}
-      rowsPerPageOptions={rowPerPageOptions}
+      rowsPerPageOptions={hasPageSizeInRowsPerPageOptions ? options.rowsPerPageOptions : []}
       rowsPerPage={paginationState.pageSize}
       {...apiRef!.current.getLocaleText('MuiTablePagination')}
       {...getPaginationChangeHandlers()}
