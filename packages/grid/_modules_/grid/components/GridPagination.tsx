@@ -80,19 +80,23 @@ export const GridPagination = React.forwardRef<
   };
 
   const hasPageSizeInRowsPerPageOptions = options.rowsPerPageOptions?.includes(
-      paginationState.pageSize,
+    paginationState.pageSize,
   );
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV !== 'production' && options.rowsPerPageOptions && !hasPageSizeInRowsPerPageOptions) {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      options.rowsPerPageOptions &&
+      !hasPageSizeInRowsPerPageOptions
+    ) {
       console.warn(
-          [
-            `The current pageSize (${paginationState.pageSize}) is not preset in the rowsPerPageOptions.`,
-            `Add it to show the pagination select.`,
-          ].join('\n'),
+        [
+          `The current pageSize (${paginationState.pageSize}) is not preset in the rowsPerPageOptions.`,
+          `Add it to show the pagination select.`,
+        ].join('\n'),
       );
     }
-  }, [options.rowsPerPageOptions, paginationState.pageSize, hasPageSizeInRowsPerPageOptions])
+  }, [options.rowsPerPageOptions, paginationState.pageSize, hasPageSizeInRowsPerPageOptions]);
 
   return (
     // @ts-ignore TODO remove once upgraded v4 support is dropped
