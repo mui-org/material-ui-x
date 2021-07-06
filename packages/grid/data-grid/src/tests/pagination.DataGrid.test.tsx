@@ -47,7 +47,7 @@ describe('<DataGrid /> - Pagination', () => {
     it('should apply the page prop correctly', () => {
       render(
         <div style={{ width: 300, height: 300 }}>
-          <DataGrid {...baselineProps} page={1} pageSize={1} />
+          <DataGrid {...baselineProps} page={1} pageSize={1} rowsPerPageOptions={[1]} />
         </div>,
       );
       expect(getColumnValues()).to.deep.equal(['Adidas']);
