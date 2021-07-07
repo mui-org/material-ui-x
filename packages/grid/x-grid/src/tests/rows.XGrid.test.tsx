@@ -535,7 +535,7 @@ describe('<XGrid /> - Rows', () => {
   describe('Cell focus', () => {
     let apiRef: GridApiRef;
 
-    const TestCase: React.FC<Pick<XGridProps, 'rows'>> = ({ rows }) => {
+    const TestCase: React.FunctionComponent<Pick<XGridProps, 'rows'>> = ({ rows }) => {
       apiRef = useGridApiRef();
 
       return (
