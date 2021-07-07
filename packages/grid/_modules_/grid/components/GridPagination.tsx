@@ -37,6 +37,8 @@ const useStyles = makeStyles(
   { defaultTheme },
 );
 
+let warnedOnceMissingPageSizeInRowsPerPageOptions = false;
+
 export const GridPagination = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -83,20 +85,20 @@ export const GridPagination = React.forwardRef<
     paginationState.pageSize,
   );
 
-  React.useEffect(() => {
-    if (
-      process.env.NODE_ENV !== 'production' &&
-      options.rowsPerPageOptions &&
-      !hasPageSizeInRowsPerPageOptions
-    ) {
-      console.warn(
-        [
-          `The current pageSize (${paginationState.pageSize}) is not preset in the rowsPerPageOptions.`,
-          `Add it to show the pagination select.`,
-        ].join('\n'),
-      );
-    }
-  }, [options.rowsPerPageOptions, paginationState.pageSize, hasPageSizeInRowsPerPageOptions]);
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    !warnedOnceMissingPageSizeInRowsPerPageOptions &&
+    options.rowsPerPageOptions &&
+    !hasPageSizeInRowsPerPageOptions
+  ) {
+    console.warn(
+      [
+        `Material-UI: The current pageSize (${paginationState.pageSize}) is not preset in the rowsPerPageOptions.`,
+        `Add it to show the pagination select.`,
+      ].join('\n'),
+    );
+    warnedOnceMissingPageSizeInRowsPerPageOptions = true;
+  }
 
   return (
     // @ts-ignore TODO remove once upgraded v4 support is dropped
