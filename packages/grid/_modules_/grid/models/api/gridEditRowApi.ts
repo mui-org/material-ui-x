@@ -2,7 +2,11 @@ import { GridCellMode } from '../gridCell';
 import { GridEditRowsModel } from '../gridEditRowModel';
 import { GridRowId } from '../gridRows';
 import { GridCellParams } from '../params/gridCellParams';
-import { GridEditCellPropsParams, GridCommitCellChangeParams } from '../params/gridEditCellParams';
+import {
+  GridEditCellPropsParams,
+  GridCommitCellChangeParams,
+  GridCommitRowChangeParams,
+} from '../params/gridEditCellParams';
 
 /**
  * The editing API interface that is available in the grid `apiRef`.
@@ -63,4 +67,8 @@ export interface GridEditRowApi {
    * @returns {boolean} A boolean indicating if there is an error.
    */
   commitCellChange: (params: GridCommitCellChangeParams, event?: React.SyntheticEvent) => boolean;
+  /**
+   * TBD
+   */
+  commitRowChange: (params: GridCommitRowChangeParams, event?: React.SyntheticEvent) => boolean;
 }

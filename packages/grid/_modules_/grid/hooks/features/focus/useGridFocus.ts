@@ -5,6 +5,7 @@ import {
   GRID_CELL_DOUBLE_CLICK,
   GRID_CELL_MOUSE_UP,
   GRID_CELL_FOCUS_OUT,
+  GRID_CELL_FOCUS_IN,
   GRID_COLUMN_HEADER_BLUR,
   GRID_COLUMN_HEADER_FOCUS,
   GRID_CELL_MODE_CHANGE,
@@ -35,8 +36,9 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
         };
       });
       forceUpdate();
+      apiRef.current.publishEvent(GRID_CELL_FOCUS_IN, apiRef.current.getCellParams(id, field));
     },
-    [forceUpdate, logger, setGridState],
+    [apiRef, forceUpdate, logger, setGridState],
   );
 
   const setColumnHeaderFocus = React.useCallback(
