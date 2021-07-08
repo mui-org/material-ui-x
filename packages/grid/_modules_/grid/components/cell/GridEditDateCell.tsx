@@ -2,7 +2,11 @@ import * as React from 'react';
 import InputBase, { InputBaseProps } from '@material-ui/core/InputBase';
 import { GridCellParams } from '../../models/params/gridCellParams';
 
-export function GridEditDateCell(props: GridCellParams & InputBaseProps) {
+interface GridEditDateCellProps extends GridCellParams {
+  editMode?: 'row' | 'cell';
+}
+
+export function GridEditDateCell(props: GridEditDateCellProps & InputBaseProps) {
   const {
     id,
     value,
@@ -15,6 +19,7 @@ export function GridEditDateCell(props: GridCellParams & InputBaseProps) {
     isEditable,
     hasFocus,
     getValue,
+    editMode,
     ...other
   } = props;
 

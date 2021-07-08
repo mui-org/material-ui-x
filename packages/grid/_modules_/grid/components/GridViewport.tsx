@@ -79,6 +79,7 @@ export const GridViewport: ViewportType = React.forwardRef<HTMLDivElement, {}>(
             cellTabIndex={cellTabIndex}
             isSelected={selectionLookup[id] !== undefined}
             editRowState={editRowsState[id]}
+            editMode={options.editMode!}
             cellClassName={options.classes?.cell}
             getCellClassName={options.getCellClassName}
           />

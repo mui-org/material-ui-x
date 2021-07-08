@@ -16,6 +16,7 @@ import { GRID_CSS_CLASS_PREFIX } from '../../constants/cssClassesConstants';
 interface RowCellsProps {
   cellClassName?: string;
   columns: GridColumns;
+  editMode: 'row' | 'cell';
   extendRowFullWidth: boolean;
   firstColIdx: number;
   id: GridRowId;
@@ -36,6 +37,7 @@ interface RowCellsProps {
 export const GridRowCells = React.memo(function GridRowCells(props: RowCellsProps) {
   const {
     columns,
+    editMode,
     firstColIdx,
     hasScrollX,
     hasScrollY,
@@ -84,7 +86,7 @@ export const GridRowCells = React.memo(function GridRowCells(props: RowCellsProp
     }
 
     if (editCellState != null && column.renderEditCell) {
-      const params = { ...cellParams, ...editCellState };
+      const params = { editMode, ...cellParams, ...editCellState };
       cellComponent = column.renderEditCell(params);
       classNames.push(`${GRID_CSS_CLASS_PREFIX}-cell--editing`);
     }

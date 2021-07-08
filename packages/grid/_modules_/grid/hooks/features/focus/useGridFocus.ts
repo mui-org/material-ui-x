@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ownerDocument } from '@material-ui/core/utils';
 import {
-  GRID_CELL_CLICK,
   GRID_CELL_DOUBLE_CLICK,
   GRID_CELL_MOUSE_UP,
   GRID_CELL_FOCUS_OUT,
@@ -23,7 +22,7 @@ import { GridComponentProps } from '../../../GridComponentProps';
 export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps, 'rows'>): void => {
   const logger = useLogger('useGridFocus');
   const [, setGridState, forceUpdate] = useGridState(apiRef);
-  const insideFocusedCell = React.useRef(false);
+  const lastClickedCell = React.useRef<GridCellParams | null>(null);
 
   const setCellFocus = React.useCallback(
     (id: GridRowId, field: string) => {
@@ -67,7 +66,7 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
     [apiRef, forceUpdate, logger, setGridState],
   );
 
-  const updateFocus = React.useCallback(
+  const handleCellDoubleClick = React.useCallback(
     ({ id, field }: GridCellParams) => {
       apiRef.current.setCellFocus(id, field);
     },
@@ -98,21 +97,27 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
       if (!cell) {
         return;
       }
-
-      if (params.id === cell.id && params.field === cell.field) {
-        insideFocusedCell.current = true;
-      }
+      lastClickedCell.current = params;
     },
     [apiRef],
   );
 
   const handleDocumentClick = React.useCallback(
     (event: MouseEvent) => {
-      const isInsideFocusedCell = insideFocusedCell.current;
-      insideFocusedCell.current = false;
+      const lastClickedCellParams = lastClickedCell.current;
+      lastClickedCell.current = null;
 
       const { cell } = apiRef.current.getState().focus;
-      if (!cell || isInsideFocusedCell) {
+      if (!cell) {
+        if (lastClickedCellParams) {
+          // No cell is focused but the user clicked in a cell
+          apiRef.current.setCellFocus(lastClickedCellParams.id, lastClickedCellParams.field);
+        }
+        return;
+      }
+
+      if (lastClickedCellParams?.id === cell.id && lastClickedCellParams?.field === cell.field) {
+        // User clicked in the focused cell
         return;
       }
 
@@ -121,16 +126,21 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
         return;
       }
 
-      setGridState((previousState) => ({
-        ...previousState,
-        focus: { cell: null, columnHeader: null },
-      }));
-
+      // User clicked outside the focused cell
       apiRef.current.publishEvent(
         GRID_CELL_FOCUS_OUT,
         apiRef.current.getCellParams(cell.id, cell.field),
         event,
       );
+      setGridState((previousState) => ({
+        ...previousState,
+        focus: { cell: null, columnHeader: null },
+      }));
+
+      if (lastClickedCellParams) {
+        // User clicked in a cell different from the one that is focused
+        apiRef.current.setCellFocus(lastClickedCellParams.id, lastClickedCellParams.field);
+      }
     },
     [apiRef, setGridState],
   );
@@ -182,8 +192,7 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
   }, [apiRef, handleDocumentClick]);
 
   useGridApiEventHandler(apiRef, GRID_COLUMN_HEADER_BLUR, handleBlur);
-  useGridApiEventHandler(apiRef, GRID_CELL_CLICK, updateFocus);
-  useGridApiEventHandler(apiRef, GRID_CELL_DOUBLE_CLICK, updateFocus);
+  useGridApiEventHandler(apiRef, GRID_CELL_DOUBLE_CLICK, handleCellDoubleClick);
   useGridApiEventHandler(apiRef, GRID_CELL_MOUSE_UP, handleCellMouseUp);
   useGridApiEventHandler(apiRef, GRID_CELL_MODE_CHANGE, handleCellModeChange);
   useGridApiEventHandler(apiRef, GRID_COLUMN_HEADER_FOCUS, handleColumnHeaderFocus);

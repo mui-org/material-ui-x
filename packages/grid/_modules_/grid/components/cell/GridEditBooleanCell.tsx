@@ -5,8 +5,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { unstable_useId as useId } from '@material-ui/core/utils';
 import { GridCellParams } from '../../models/params/gridCellParams';
 
+interface GridEditBooleanCellProps extends GridCellParams {
+  editMode?: 'row' | 'cell';
+}
+
 export function GridEditBooleanCell(
-  props: GridCellParams &
+  props: GridEditBooleanCellProps &
     React.DetailedHTMLProps<React.LabelHTMLAttributes<HTMLLabelElement>, HTMLLabelElement>,
 ) {
   const {
@@ -22,6 +26,7 @@ export function GridEditBooleanCell(
     className,
     getValue,
     hasFocus,
+    editMode,
     ...other
   } = props;
 

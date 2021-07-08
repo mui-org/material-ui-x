@@ -379,6 +379,7 @@ const baselineEditProps = {
       DOB: new Date(1996, 10, 2),
       meetup: new Date(2020, 2, 25, 10, 50, 0),
       isAdmin: true,
+      country: 'Spain',
     },
     {
       id: 1,
@@ -391,6 +392,7 @@ const baselineEditProps = {
       DOB: new Date(1992, 1, 20),
       meetup: new Date(2020, 4, 15, 10, 50, 0),
       isAdmin: true,
+      country: 'Netherlands',
     },
     {
       id: 2,
@@ -403,6 +405,7 @@ const baselineEditProps = {
       DOB: new Date(1986, 0, 12),
       meetup: new Date(2020, 3, 5, 10, 50, 0),
       isAdmin: false,
+      country: 'Brazil',
     },
   ],
   columns: [
@@ -414,6 +417,13 @@ const baselineEditProps = {
       valueGetter: ({ row }) => `${row.firstname || ''} ${row.lastname || ''}`,
     },
     { field: 'isAdmin', width: 120, type: 'boolean', editable: true },
+    {
+      field: 'country',
+      width: 120,
+      type: 'singleSelect',
+      editable: true,
+      valueOptions: ['Bulgaria', 'Netherlands', 'France', 'Italy', 'Brazil', 'Spain'],
+    },
     { field: 'username', editable: true },
     { field: 'email', editable: true, width: 150 },
     { field: 'age', width: 50, type: 'number', editable: true },
