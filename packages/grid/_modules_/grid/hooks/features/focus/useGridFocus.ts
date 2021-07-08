@@ -91,16 +91,9 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
     }));
   }, [logger, setGridState]);
 
-  const handleCellMouseUp = React.useCallback(
-    (params: GridCellParams) => {
-      const { cell } = apiRef.current.getState().focus;
-      if (!cell) {
-        return;
-      }
-      lastClickedCell.current = params;
-    },
-    [apiRef],
-  );
+  const handleCellMouseUp = React.useCallback((params: GridCellParams) => {
+    lastClickedCell.current = params;
+  }, []);
 
   const handleDocumentClick = React.useCallback(
     (event: MouseEvent) => {

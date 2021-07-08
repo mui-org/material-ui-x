@@ -41,7 +41,7 @@ export function GridEditInputCell(props: GridEditInputCellProps & InputBaseProps
 
   return (
     <InputBase
-      autoFocus
+      autoFocus={editMode === 'cell'}
       className="MuiDataGrid-editInputCell"
       fullWidth
       type={colDef.type === 'number' ? colDef.type : 'text'}

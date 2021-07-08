@@ -269,6 +269,7 @@ describe('<XGrid /> - Edit Rows', () => {
     expect(cell.querySelector('input')!.value).to.equal('1970');
 
     const otherCell = getCell(2, 1);
+    fireEvent.mouseUp(otherCell);
     fireEvent.click(otherCell);
     fireEvent.focus(otherCell);
     expect(cell).not.to.have.class('MuiDataGrid-cell--editing');
@@ -323,6 +324,7 @@ describe('<XGrid /> - Edit Rows', () => {
     expect(cell.querySelector('input')!.value).to.equal('1970');
 
     const otherCell = getCell(2, 1);
+    fireEvent.mouseUp(otherCell);
     fireEvent.click(otherCell);
     fireEvent.focus(otherCell);
     expect(cell).not.to.have.class('MuiDataGrid-cell--editing');

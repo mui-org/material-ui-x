@@ -70,7 +70,7 @@ export function GridEditDateCell(props: GridEditDateCellProps & InputBaseProps) 
 
   return (
     <InputBase
-      autoFocus
+      autoFocus={editMode === 'cell'}
       fullWidth
       className="MuiDataGrid-editInputCell"
       type={isDateTime ? 'datetime-local' : 'date'}

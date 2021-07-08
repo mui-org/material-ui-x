@@ -72,7 +72,7 @@ export function GridEditSingleSelectCell(props: GridEditSingleSelectCellProps & 
       MenuProps={{
         onClose: handleClose,
       }}
-      autoFocus
+      autoFocus={editMode === 'cell'}
       fullWidth
       {...other}
     >
