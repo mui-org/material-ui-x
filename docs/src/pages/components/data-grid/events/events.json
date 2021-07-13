@@ -62,6 +62,10 @@
     "description": "Fired when a cell loses focus. Called with a <a href=\"/api/data-grid/grid-cell-params/\">GridCellParams</a> object."
   },
   {
+    "name": "cellFocusIn",
+    "description": "Fired when a cell gains focus. Called with a <a href=\"/api/data-grid/grid-cell-params/\">GridCellParams</a> object."
+  },
+  {
     "name": "cellEditPropsChange",
     "description": "Fired when the props of the edit input changes. Called with a GridEditCellPropsParams object."
   },
@@ -81,6 +85,8 @@
     "name": "cellEditExit",
     "description": "Fired when the cell turns back to view mode. Called with a <a href=\"/api/data-grid/grid-cell-params/\">GridCellParams</a> object."
   },
+  { "name": "rowEditExit", "description": "TBD" },
+  { "name": "rowEditCommit", "description": "TBD" },
   {
     "name": "rowClick",
     "description": "Fired when a row is clicked. Called with a <a href=\"/api/data-grid/grid-row-params/\">GridRowParams</a> object."

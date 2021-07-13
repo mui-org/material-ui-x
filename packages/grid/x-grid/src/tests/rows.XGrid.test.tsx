@@ -575,6 +575,7 @@ describe('<XGrid /> - Rows', () => {
     it('should focus the clicked cell in the state', () => {
       render(<TestCase rows={baselineProps.rows} />);
 
+      fireEvent.mouseUp(getCell(0, 0));
       fireEvent.click(getCell(0, 0));
       expect(apiRef.current.getState().focus.cell).to.deep.equal({
         id: baselineProps.rows[0].id,
@@ -593,6 +594,7 @@ describe('<XGrid /> - Rows', () => {
     it('should not reset focus when removing a row not containing the focus cell', () => {
       const { setProps } = render(<TestCase rows={baselineProps.rows} />);
 
+      fireEvent.mouseUp(getCell(1, 0));
       fireEvent.click(getCell(1, 0));
       setProps({ rows: baselineProps.rows.slice(1) });
       expect(apiRef.current.getState().focus.cell).to.deep.equal({

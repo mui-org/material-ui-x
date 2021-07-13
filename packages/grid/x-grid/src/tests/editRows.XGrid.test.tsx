@@ -269,6 +269,7 @@ describe('<XGrid /> - Edit Rows', () => {
     expect(cell.querySelector('input')!.value).to.equal('1970');
 
     const otherCell = getCell(2, 1);
+    fireEvent.mouseUp(otherCell);
     fireEvent.click(otherCell);
     fireEvent.focus(otherCell);
     expect(cell).not.to.have.class('MuiDataGrid-cell--editing');
@@ -323,6 +324,7 @@ describe('<XGrid /> - Edit Rows', () => {
     expect(cell.querySelector('input')!.value).to.equal('1970');
 
     const otherCell = getCell(2, 1);
+    fireEvent.mouseUp(otherCell);
     fireEvent.click(otherCell);
     fireEvent.focus(otherCell);
     expect(cell).not.to.have.class('MuiDataGrid-cell--editing');
@@ -651,6 +653,53 @@ describe('<XGrid /> - Edit Rows', () => {
       const input = cell.querySelector('input')!;
       fireEvent.change(input, { target: { value: '' } });
       expect(onEditCellChange.args[0][0].props.value).to.equal(null);
+    });
+  });
+
+  describe('validation', () => {
+    it('should not allow to save an invalid value with Enter', () => {
+      const { setProps } = render(<TestCase editRowsModel={{}} />);
+      const cell = getCell(1, 0);
+      cell.focus();
+      fireEvent.doubleClick(cell);
+      const input = cell.querySelector('input')!;
+      expect(input).not.to.have.attribute('aria-invalid');
+      fireEvent.change(input, { target: { value: 'n' } });
+      setProps({ editRowsModel: { 1: { brand: { error: true, value: 'n' } } } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+      expect(input).to.have.attribute('aria-invalid', 'true');
+      expect(cell).to.have.class('MuiDataGrid-cell--editing');
+    });
+
+    it('should not allow to save an invalid value with commitCellChange', () => {
+      const { setProps } = render(<TestCase editRowsModel={{}} />);
+      const cell = getCell(1, 0);
+      cell.focus();
+      fireEvent.doubleClick(cell);
+      const input = cell.querySelector('input')!;
+      expect(input).not.to.have.attribute('aria-invalid');
+      fireEvent.change(input, { target: { value: 'n' } });
+      setProps({ editRowsModel: { 1: { brand: { error: true, value: 'n' } } } });
+      apiRef.current.commitCellChange({ id: 1, field: 'brand' });
+      apiRef.current.setCellMode(1, 'brand', 'view');
+      expect(cell).to.have.text('Adidas');
+    });
+
+    it('should not call onEditCellChangeCommitted for invalid values', () => {
+      const onEditCellChangeCommitted = spy();
+      const { setProps } = render(
+        <TestCase onEditCellChangeCommitted={onEditCellChangeCommitted} editRowsModel={{}} />,
+      );
+      const cell = getCell(1, 0);
+      cell.focus();
+      fireEvent.doubleClick(cell);
+      const input = cell.querySelector('input')!;
+      expect(input).not.to.have.attribute('aria-invalid');
+      fireEvent.change(input, { target: { value: 'n' } });
+      setProps({ editRowsModel: { 1: { brand: { error: true, value: 'n' } } } });
+      apiRef.current.commitCellChange({ id: 1, field: 'brand' });
+      apiRef.current.setCellMode(1, 'brand', 'view');
+      expect(onEditCellChangeCommitted.callCount).to.equal(0);
     });
   });
 });

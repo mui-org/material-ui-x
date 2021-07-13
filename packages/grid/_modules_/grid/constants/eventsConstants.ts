@@ -114,6 +114,12 @@ export const GRID_CELL_FOCUS = 'cellFocus';
 export const GRID_CELL_FOCUS_OUT = 'cellFocusOut';
 
 /**
+ * Fired when a cell gains focus. Called with a [[GridCellParams]] object.
+ * @event
+ */
+export const GRID_CELL_FOCUS_IN = 'cellFocusIn';
+
+/**
  * Fired when the user starts dragging a cell. It's mapped to the `dragstart` DOM event.
  * Called with a [[GridCellParams]] object.
  * @ignore - do not document.
@@ -174,6 +180,18 @@ export const GRID_CELL_EDIT_ENTER = 'cellEditEnter';
  * @event
  */
 export const GRID_CELL_EDIT_EXIT = 'cellEditExit';
+
+/**
+ * TBD
+ * @event
+ */
+export const GRID_ROW_EDIT_EXIT = 'rowEditExit';
+
+/**
+ * TBD
+ * @event
+ */
+export const GRID_ROW_EDIT_COMMIT = 'rowEditCommit';
 
 /**
  * Fired when a [navigation key](/components/data-grid/accessibility#keyboard-navigation) is pressed in a cell.

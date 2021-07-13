@@ -136,7 +136,7 @@ export interface GridOptions {
    * Set it to 'client' if you would like to handle editing on the client-side.
    * Set it to 'server' if you would like to handle editing on the server-side.
    */
-  editMode?: GridFeatureMode;
+  editMode?: 'row' | 'cell';
   /**
    * Set the edit rows model of the grid.
    */
@@ -518,4 +518,5 @@ export const DEFAULT_GRID_OPTIONS: GridOptions = {
   sortingOrder: ['asc', 'desc', null],
   logger: console,
   logLevel: process.env.NODE_ENV === 'production' ? 'error' : 'warn',
+  editMode: 'cell',
 };
