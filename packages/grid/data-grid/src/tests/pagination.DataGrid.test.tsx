@@ -47,7 +47,7 @@ describe('<DataGrid /> - Pagination', () => {
     it('should apply the page prop correctly', () => {
       render(
         <div style={{ width: 300, height: 300 }}>
-          <DataGrid {...baselineProps} page={1} pageSize={1} rowsPerPageOptions={[1]} />
+          <DataGrid {...baselineProps} page={1} pageSize={1} rowsPerPageOptions={[1, 100]} />
         </div>,
       );
       expect(getColumnValues()).to.deep.equal(['Adidas']);
@@ -81,7 +81,7 @@ describe('<DataGrid /> - Pagination', () => {
             {...baselineProps}
             onPageChange={onPageChange}
             pageSize={1}
-            rowsPerPageOptions={[1]}
+            rowsPerPageOptions={[1, 100]}
           />
         </div>,
       );
@@ -102,7 +102,7 @@ describe('<DataGrid /> - Pagination', () => {
             page={1}
             onPageChange={onPageChange}
             pageSize={1}
-            rowsPerPageOptions={[1]}
+            rowsPerPageOptions={[1, 100]}
           />
         </div>,
       );
@@ -122,7 +122,7 @@ describe('<DataGrid /> - Pagination', () => {
             {...baselineProps}
             onPageChange={onPageChange}
             pageSize={1}
-            rowsPerPageOptions={[1]}
+            rowsPerPageOptions={[1, 100]}
             paginationMode="server"
           />
         </div>,
@@ -145,7 +145,7 @@ describe('<DataGrid /> - Pagination', () => {
       }
 
       const { setProps } = render(
-        <Test page={1} pageSize={1} rowsPerPageOptions={[1]} onPageChange={onPageChange} />,
+        <Test page={1} pageSize={1} rowsPerPageOptions={[1, 100]} onPageChange={onPageChange} />,
       );
       expect(onPageChange.callCount).to.equal(0);
       setProps({ page: 2 });
@@ -164,7 +164,12 @@ describe('<DataGrid /> - Pagination', () => {
       }
 
       const { setProps } = render(
-        <Test onPageSizeChange={onPageSizeChange} pageSize={1} rowsPerPageOptions={[1]} page={1} />,
+        <Test
+          onPageSizeChange={onPageSizeChange}
+          pageSize={1}
+          rowsPerPageOptions={[1, 2, 100]}
+          page={1}
+        />,
       );
       expect(onPageSizeChange.callCount).to.equal(0);
       setProps({ pageSize: 2 });
@@ -210,6 +215,7 @@ describe('<DataGrid /> - Pagination', () => {
               rows={rows}
               pagination
               pageSize={1}
+              rowsPerPageOptions={[1, 100]}
               rowCount={3}
               paginationMode="server"
               onPageChange={handlePageChange}
@@ -227,7 +233,7 @@ describe('<DataGrid /> - Pagination', () => {
     it('should not change the page when clicking on the next page and a page prop is provided', () => {
       render(
         <div style={{ width: 300, height: 300 }}>
-          <DataGrid {...baselineProps} page={0} pageSize={1} />
+          <DataGrid {...baselineProps} page={0} pageSize={1} rowsPerPageOptions={[1, 100]} />
         </div>,
       );
       expect(getColumnValues()).to.deep.equal(['Nike']);
@@ -248,6 +254,7 @@ describe('<DataGrid /> - Pagination', () => {
               pagination
               page={1}
               pageSize={25}
+              rowsPerPageOptions={[25, 100]}
               filterModel={{
                 items: [
                   {
