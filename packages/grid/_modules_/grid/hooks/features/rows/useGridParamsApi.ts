@@ -15,15 +15,6 @@ import { useGridSelector } from '../core/useGridSelector';
 import { gridFocusCellSelector, gridTabIndexCellSelector } from '../focus/gridFocusStateSelector';
 
 let warnedOnce = false;
-function warnMissingColumn(field) {
-  console.warn(
-    [
-      `Material-UI: You are calling getValue('${field}') but the column \`${field}\` is not defined.`,
-      `Instead, you can access the data from \`params.row.${field}\`.`,
-    ].join('\n'),
-  );
-  warnedOnce = true;
-}
 
 export function useGridParamsApi(apiRef: GridApiRef) {
   const cellFocus = useGridSelector(apiRef, gridFocusCellSelector);
@@ -123,7 +114,13 @@ export function useGridParamsApi(apiRef: GridApiRef) {
 
       if (process.env.NODE_ENV !== 'production') {
         if (!colDef && !warnedOnce) {
-          warnMissingColumn(field);
+          console.warn(
+            [
+              `Material-UI: You are calling getValue('${field}') but the column \`${field}\` is not defined.`,
+              `Instead, you can access the data from \`params.row.${field}\`.`,
+            ].join('\n'),
+          );
+          warnedOnce = true;
         }
       }
 

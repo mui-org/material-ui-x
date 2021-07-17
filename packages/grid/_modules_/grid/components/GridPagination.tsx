@@ -37,7 +37,7 @@ const useStyles = makeStyles(
   { defaultTheme },
 );
 
-let warnedOnceMissingPageSizeInRowsPerPageOptions = false;
+let warnedOnce = false;
 
 export const GridPagination = React.forwardRef<
   HTMLDivElement,
@@ -85,19 +85,16 @@ export const GridPagination = React.forwardRef<
     paginationState.pageSize,
   );
 
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    !warnedOnceMissingPageSizeInRowsPerPageOptions &&
-    options.rowsPerPageOptions &&
-    !hasPageSizeInRowsPerPageOptions
-  ) {
-    console.warn(
-      [
-        `Material-UI: The current pageSize (${paginationState.pageSize}) is not preset in the rowsPerPageOptions.`,
-        `Add it to show the pagination select.`,
-      ].join('\n'),
-    );
-    warnedOnceMissingPageSizeInRowsPerPageOptions = true;
+  if (process.env.NODE_ENV !== 'production') {
+    if (options.rowsPerPageOptions && !hasPageSizeInRowsPerPageOptions && !warnedOnce) {
+      console.warn(
+        [
+          `Material-UI: The page size \`${paginationState.pageSize}\` is not preset in the \`rowsPerPageOptions\` prop.`,
+          `Instead, update the \`rowsPerPageOptions\` prop to include this value in the array or remove \`pageSize={${paginationState.pageSize}}\`.`,
+        ].join('\n'),
+      );
+      warnedOnce = true;
+    }
   }
 
   return (
