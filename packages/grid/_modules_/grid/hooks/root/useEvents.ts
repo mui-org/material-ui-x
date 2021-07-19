@@ -11,7 +11,9 @@ import {
   GRID_COMPONENT_ERROR,
   GRID_STATE_CHANGE,
   GRID_CELL_DOUBLE_CLICK,
+  GRID_CELL_CONTEXT_MENU,
   GRID_ROW_DOUBLE_CLICK,
+  GRID_ROW_CONTEXT_MENU,
   GRID_CELL_ENTER,
   GRID_CELL_LEAVE,
   GRID_CELL_OUT,
@@ -49,6 +51,7 @@ export function useEvents(apiRef: GridApiRef): void {
 
   useGridApiOptionHandler(apiRef, GRID_CELL_CLICK, options.onCellClick);
   useGridApiOptionHandler(apiRef, GRID_CELL_DOUBLE_CLICK, options.onCellDoubleClick);
+  useGridApiOptionHandler(apiRef, GRID_CELL_CONTEXT_MENU, options.onCellContextMenu);
   useGridApiOptionHandler(apiRef, GRID_CELL_OVER, options.onCellOver);
   useGridApiOptionHandler(apiRef, GRID_CELL_OUT, options.onCellOut);
   useGridApiOptionHandler(apiRef, GRID_CELL_ENTER, options.onCellEnter);
@@ -58,6 +61,7 @@ export function useEvents(apiRef: GridApiRef): void {
   useGridApiOptionHandler(apiRef, GRID_CELL_FOCUS_OUT, options.onCellFocusOut);
 
   useGridApiOptionHandler(apiRef, GRID_ROW_DOUBLE_CLICK, options.onRowDoubleClick);
+  useGridApiOptionHandler(apiRef, GRID_ROW_CONTEXT_MENU, options.onRowContextMenu);
   useGridApiOptionHandler(apiRef, GRID_ROW_CLICK, options.onRowClick);
   useGridApiOptionHandler(apiRef, GRID_ROW_OVER, options.onRowOver);
   useGridApiOptionHandler(apiRef, GRID_ROW_OUT, options.onRowOut);

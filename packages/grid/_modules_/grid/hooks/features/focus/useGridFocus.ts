@@ -3,6 +3,7 @@ import { ownerDocument } from '@material-ui/core/utils';
 import {
   GRID_CELL_CLICK,
   GRID_CELL_DOUBLE_CLICK,
+  GRID_CELL_CONTEXT_MENU,
   GRID_CELL_MOUSE_UP,
   GRID_CELL_FOCUS_OUT,
   GRID_COLUMN_HEADER_BLUR,
@@ -182,6 +183,7 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
   useGridApiEventHandler(apiRef, GRID_COLUMN_HEADER_BLUR, handleBlur);
   useGridApiEventHandler(apiRef, GRID_CELL_CLICK, updateFocus);
   useGridApiEventHandler(apiRef, GRID_CELL_DOUBLE_CLICK, updateFocus);
+  useGridApiEventHandler(apiRef, GRID_CELL_CONTEXT_MENU, updateFocus);
   useGridApiEventHandler(apiRef, GRID_CELL_MOUSE_UP, handleCellMouseUp);
   useGridApiEventHandler(apiRef, GRID_CELL_MODE_CHANGE, handleCellModeChange);
   useGridApiEventHandler(apiRef, GRID_COLUMN_HEADER_FOCUS, handleColumnHeaderFocus);

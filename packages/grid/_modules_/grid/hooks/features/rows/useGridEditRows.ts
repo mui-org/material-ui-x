@@ -5,6 +5,7 @@ import {
   GRID_CELL_EDIT_PROPS_CHANGE_COMMITTED,
   GRID_ROW_EDIT_MODEL_CHANGE,
   GRID_CELL_DOUBLE_CLICK,
+  GRID_CELL_CONTEXT_MENU,
   GRID_CELL_EDIT_ENTER,
   GRID_CELL_EDIT_EXIT,
   GRID_CELL_NAVIGATION_KEY_DOWN,
@@ -325,6 +326,7 @@ export function useGridEditRows(apiRef: GridApiRef) {
   useGridApiEventHandler(apiRef, GRID_CELL_KEY_DOWN, handleCellKeyDown);
   useGridApiEventHandler(apiRef, GRID_CELL_MOUSE_DOWN, preventTextSelection);
   useGridApiEventHandler(apiRef, GRID_CELL_DOUBLE_CLICK, handleDoubleClick);
+  useGridApiEventHandler(apiRef, GRID_CELL_CONTEXT_MENU, handleDoubleClick);
   useGridApiEventHandler(apiRef, GRID_CELL_EDIT_ENTER, handleEnterEdit);
   useGridApiEventHandler(apiRef, GRID_CELL_EDIT_EXIT, handleExitEdit);
   useGridApiEventHandler(apiRef, GRID_CELL_FOCUS_OUT, handleCellFocusOut);

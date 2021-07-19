@@ -5,6 +5,7 @@ import {
   GRID_CELL_BLUR,
   GRID_CELL_CLICK,
   GRID_CELL_DOUBLE_CLICK,
+  GRID_CELL_CONTEXT_MENU,
   GRID_CELL_ENTER,
   GRID_CELL_FOCUS,
   GRID_CELL_KEY_DOWN,
@@ -120,6 +121,7 @@ export const GridCell = React.memo(function GridCell(props: GridCellProps) {
     () => ({
       onClick: publish(GRID_CELL_CLICK),
       onDoubleClick: publish(GRID_CELL_DOUBLE_CLICK),
+      onContextMenu: publish(GRID_CELL_CONTEXT_MENU),
       onMouseDown: publish(GRID_CELL_MOUSE_DOWN),
       onMouseUp: publishMouseUp(GRID_CELL_MOUSE_UP),
       onMouseOver: publish(GRID_CELL_OVER),

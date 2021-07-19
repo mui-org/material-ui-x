@@ -249,6 +249,12 @@ export interface GridOptions {
    */
   onCellDoubleClick?: (params: GridCellParams, event: React.MouseEvent) => void;
   /**
+   * Callback fired when a right click event comes from a cell element.
+   * @param param With all properties from [[CellParams]].
+   * @param event [[React.MouseEvent]].
+   */
+  onCellContextMenu?: (params: GridCellParams, event: React.MouseEvent) => void;
+  /**
    * Callback fired when a cell loses focus.
    * @param param With all properties from [[GridCellParams]].
    * @param event [[Event]].
@@ -382,6 +388,12 @@ export interface GridOptions {
    * @param event [[React.MouseEvent]].
    */
   onRowDoubleClick?: (param: GridRowParams, event: React.MouseEvent) => void;
+  /**
+   * Callback fired when a right click event comes from a row container element.
+   * @param param With all properties from [[RowParams]].
+   * @param event [[React.MouseEvent]].
+   */
+  onRowContextMenu?: (param: GridRowParams, event: React.MouseEvent) => void;
   /**
    * Callback fired when a mouseover event comes from a row container element.
    * @param param With all properties from [[GridRowParams]].

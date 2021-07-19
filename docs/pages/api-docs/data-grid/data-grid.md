@@ -53,6 +53,7 @@ import { DataGrid } from '@material-ui/data-grid';
 | <span class="prop-name">nonce</span> | <span class="prop-type">string</span> |   | Nonce of the inline styles for [Content Security Policy](https://www.w3.org/TR/2016/REC-CSP2-20161215/#script-src-the-nonce-attribute). |
 | <span class="prop-name">onCellClick</span> | <span class="prop-type">(params: GridCellParams, event: React.MouseEvent) => void</span> |   | Callback fired when a click event comes from a cell element. |
 | <span class="prop-name">onCellDoubleClick</span> | <span class="prop-type">(params: GridCellParams, event: React.MouseEvent) => void</span> |   | Callback fired when a double click event comes from a cell element. |
+| <span class="prop-name">onCellContextMenu</span> | <span class="prop-type">(params: GridCellParams, event: React.MouseEvent) => void</span> |   | Callback fired when a right click event comes from a cell element. |
 | <span class="prop-name">onCellOver</span> | <span class="prop-type">(params: GridCellParams, event: React.MouseEvent) => void</span> |   | Callback fired when a mouse over event comes from a cell element. |
 | <span class="prop-name">onCellOut</span> | <span class="prop-type">(params: GridCellParams, event: React.MouseEvent) => void</span> |   | Callback fired when a mouse out comes from a cell element. |
 | <span class="prop-name">onCellEnter</span> | <span class="prop-type">(params: GridCellParams, event: React.MouseEvent) => void</span> |   | Callback fired when a mouse enter event comes from a cell element. |
@@ -78,6 +79,7 @@ import { DataGrid } from '@material-ui/data-grid';
 | <span class="prop-name">onResize</span> | <span class="prop-type">(param: GridResizeParams) => void</span> |   | Callback fired when the grid is being resized. |
 | <span class="prop-name">onRowClick</span> | <span class="prop-type">(param: GridRowParams, event: React.MouseEvent) => void</span> |   | Callback fired when a click event comes from a row container element. |
 | <span class="prop-name">onRowDoubleClick</span> | <span class="prop-type">(param: GridRowParams, event: React.MouseEvent) => void</span> |   | Callback fired when a double click event comes from a row container element. |
+| <span class="prop-name">onRowContextMenu</span> | <span class="prop-type">(param: GridRowParams, event: React.MouseEvent) => void</span> |   | Callback fired when a right click event comes from a row container element. |
 | <span class="prop-name">onRowOver</span> | <span class="prop-type">(param: GridRowParams, event: React.MouseEvent) => void</span> |   | Callback fired when a mouse over comes from a row container element. |
 | <span class="prop-name">onRowOut</span> | <span class="prop-type">(param: GridRowParams, event: React.MouseEvent) => void</span> |   | Callback fired when a mouse out comes from a row container element. |
 | <span class="prop-name">onRowEnter</span> | <span class="prop-type">(param: GridRowParams, event: React.MouseEvent) => void</span> |   | Callback fired when a mouse enter comes from a row container element. |

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import {
   GRID_ROW_DOUBLE_CLICK,
   GRID_ROW_CLICK,
+  GRID_ROW_CONTEXT_MENU,
   GRID_ROW_ENTER,
   GRID_ROW_LEAVE,
   GRID_ROW_OUT,
@@ -51,6 +52,7 @@ export function GridRow(props: GridRowProps) {
     () => ({
       onClick: publish(GRID_ROW_CLICK),
       onDoubleClick: publish(GRID_ROW_DOUBLE_CLICK),
+      onContextMenu: publish(GRID_ROW_CONTEXT_MENU),
       onMouseOver: publish(GRID_ROW_OVER),
       onMouseOut: publish(GRID_ROW_OUT),
       onMouseEnter: publish(GRID_ROW_ENTER),

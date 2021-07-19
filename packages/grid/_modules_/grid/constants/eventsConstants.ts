@@ -54,6 +54,12 @@ export const GRID_CELL_CLICK = 'cellClick';
 export const GRID_CELL_DOUBLE_CLICK = 'cellDoubleClick';
 
 /**
+ * Fired when a cell is right-clicked. Called with a [[GridCellParams]] object.
+ * @event
+ */
+export const GRID_CELL_CONTEXT_MENU = 'cellContextMenu';
+
+/**
  * Fired when a `mousedown` event happens in a cell. Called with a [[GridCellParams]] object.
  * @event
  */
@@ -194,6 +200,12 @@ export const GRID_ROW_CLICK = 'rowClick';
  * @event
  */
 export const GRID_ROW_DOUBLE_CLICK = 'rowDoubleClick';
+
+/**
+ * Fired when a row is right-clicked. Called with a [[GridRowParams]] object.
+ * @event
+ */
+export const GRID_ROW_CONTEXT_MENU = 'rowContextMenu';
 
 /**
  * Fired when a `mouseover` event happens in a row.  Called with a [[GridRowParams]] object.
