@@ -354,6 +354,47 @@ describe('<DataGrid /> - Layout & Warnings', () => {
         });
       });
 
+      it('should split the columns equally if they are all flex', () => {
+        const rows = [
+          {
+            id: 1,
+            name: 'John Doe',
+            age: 30,
+          },
+        ];
+
+        const columns = [
+          {
+            field: 'id',
+            flex: 1,
+          },
+          {
+            field: 'name',
+            flex: 1,
+          },
+          {
+            field: 'age',
+            flex: 1,
+          },
+        ];
+
+        const containerWidth = 400;
+
+        render(
+          <div style={{ width: containerWidth, height: 300 }}>
+            <DataGrid columns={columns} rows={rows} />
+          </div>,
+        );
+
+        const expectedWidth = ((containerWidth - 2) / 3).toFixed(3);
+        const firstColumnWidth = getColumnHeaderCell(0).style.width.split('px')[0];
+        const secondColumnWidth = getColumnHeaderCell(1).style.width.split('px')[0];
+        const thirdColumnWidth = getColumnHeaderCell(2).style.width.split('px')[0];
+        expect(firstColumnWidth).to.equal(expectedWidth);
+        expect(secondColumnWidth).to.equal(expectedWidth);
+        expect(thirdColumnWidth).to.equal(expectedWidth);
+      });
+
       it('should handle hidden columns', () => {
         const rows = [{ id: 1, firstName: 'Jon' }];
         const columns = [

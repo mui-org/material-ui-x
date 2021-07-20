@@ -125,7 +125,6 @@ export const useStyles = makeStyles(
           flex: 1,
           whiteSpace: 'nowrap',
           overflow: 'hidden',
-          padding: '0 6px',
         },
         '& .MuiDataGrid-sortIcon, & .MuiDataGrid-filterIcon': {
           fontSize: 'inherit',
@@ -156,8 +155,7 @@ export const useStyles = makeStyles(
         },
         '& .MuiDataGrid-columnSeparator': {
           position: 'absolute',
-          right: -12,
-          zIndex: 100,
+          right: 0,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -183,9 +181,9 @@ export const useStyles = makeStyles(
         '& .MuiDataGrid-menuIcon': {
           visibility: 'hidden',
           fontSize: 20,
-          marginRight: -6,
           display: 'flex',
           alignItems: 'center',
+          zIndex: 10,
         },
         '& .MuiDataGrid-columnHeader:hover .MuiDataGrid-menuIcon, .MuiDataGrid-menuOpen': {
           visibility: 'visible',

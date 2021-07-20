@@ -11,7 +11,7 @@ export interface GridColumnHeaderSeparatorProps extends React.HTMLAttributes<HTM
   height: number;
 }
 
-export const GridColumnHeaderSeparator = React.memo(function GridColumnHeaderSeparator(
+export const GridColumnHeaderSeparator = function GridColumnHeaderSeparator(
   props: GridColumnHeaderSeparatorProps,
 ) {
   const { resizable, resizing, height, ...other } = props;
@@ -38,4 +38,4 @@ export const GridColumnHeaderSeparator = React.memo(function GridColumnHeaderSep
       <ColumnResizeIcon className="MuiDataGrid-iconSeparator" />
     </div>
   );
-});
+};
