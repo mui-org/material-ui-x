@@ -90,6 +90,7 @@ import { XGrid } from '@material-ui/x-grid';
 | <span class="prop-name">onRowsScrollEnd</span> | <span class="prop-type">(param: GridRowScrollEndParams) => void</span> |   | Callback fired when scrolling to the bottom of the grid viewport. |
 | <span class="prop-name">onSelectionModelChange</span> | <span class="prop-type">(param: GridSelectionModelChangeParams) => void</span> |   | Callback fired when the selection state of one or multiple rows changes. |
 | <span class="prop-name">onSortModelChange</span> | <span class="prop-type">(param: GridSortModelParams) => void</span> |   | Callback fired when the sort model changes before a column is sorted. |
+| <span class="prop-name">onViewportRowsChange</span> | <span class="prop-type">(param: GridViewportRowsChange) => void</span> |   | Callback fired when the virtual page changes. |
 | <span class="prop-name">page</span> | <span class="prop-type">number</span> | 1   |  Set the current page. |
 | <span class="prop-name">pageSize</span> | <span class="prop-type">number</span> | 100 | Set the number of rows in one page. |
 | <span class="prop-name">pagination</span> | <span class="prop-type">boolean</span> | false | If `true`, pagination is enabled. |

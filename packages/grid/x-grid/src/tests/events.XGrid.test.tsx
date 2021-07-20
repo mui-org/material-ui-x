@@ -20,6 +20,7 @@ import {
 } from '@material-ui/x-grid';
 import { getCell, getColumnHeaderCell, getRow } from 'test/utils/helperFn';
 import { spy } from 'sinon';
+import { useData } from 'packages/storybook/src/hooks/useData';
 
 describe('<XGrid /> - Events Params', () => {
   // TODO v5: replace with createClientRender
@@ -68,6 +69,16 @@ describe('<XGrid /> - Events Params', () => {
     return (
       <div style={{ width: 300, height: 300 }}>
         <XGrid apiRef={apiRef} {...baselineProps} {...props} />
+      </div>
+    );
+  };
+
+  const TestVirtualization = (props: Partial<XGridProps>) => {
+    apiRef = useGridApiRef();
+    const data = useData(50, 10);
+    return (
+      <div style={{ width: 300, height: 300 }}>
+        <XGrid rows={data.rows} columns={data.columns} apiRef={apiRef} {...props} />
       </div>
     );
   };
@@ -286,5 +297,22 @@ describe('<XGrid /> - Events Params', () => {
     gridWindow.scrollTop = 12345;
     gridWindow.dispatchEvent(new Event('scroll'));
     expect(handleOnRowsScrollEnd.callCount).to.equal(1);
+  });
+
+  it('call onViewportRowsChange when the viewport rows change', () => {
+    const handleOnViewportRowsChange = spy();
+    const { container } = render(
+      <div style={{ width: 300, height: 300 }}>
+        <TestVirtualization onViewportRowsChange={handleOnViewportRowsChange} />
+      </div>,
+    );
+    const gridWindow = container.querySelector('.MuiDataGrid-window');
+    // scroll 10 rows.
+    gridWindow.scrollTop = 12345;
+    gridWindow.dispatchEvent(new Event('scroll'));
+
+    expect(handleOnViewportRowsChange.callCount).to.equal(1);
+    expect(handleOnViewportRowsChange.lastCall.args[0].firstRowIndex).to.equal(48);
+    expect(handleOnViewportRowsChange.lastCall.args[0].lastRowIndex).to.equal(50);
   });
 });

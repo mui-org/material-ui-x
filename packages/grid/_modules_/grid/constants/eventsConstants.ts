@@ -451,3 +451,9 @@ export const GRID_STATE_CHANGE = 'stateChange';
  * @event
  */
 export const GRID_COLUMN_VISIBILITY_CHANGE = 'columnVisibilityChange';
+
+/**
+ * Fired when a the viewport rows change. Called with a [[GridViewportRowsChange]] object.
+ * @event
+ */
+export const GRID_VIEWPORT_ROWS_CHANGE = 'viewportRowsChange';
