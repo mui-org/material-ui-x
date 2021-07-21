@@ -140,7 +140,10 @@ export const useGridContainerProps = (apiRef: GridApiRef) => {
             ? rowsCount
             : viewportFitHeightSize;
 
-        const requiredHeight = Math.max(viewportPageSize * rowHeight, 1);
+        const requiredHeight = Math.max(
+          viewportPageSize * rowHeight + (options.autoHeight ? scrollBarState.scrollBarSize.x : 0),
+          1,
+        );
 
         const indexes: GridContainerProps = {
           isVirtualized: false,

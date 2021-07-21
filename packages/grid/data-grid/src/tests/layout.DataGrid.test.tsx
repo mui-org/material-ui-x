@@ -488,15 +488,41 @@ describe('<DataGrid /> - Layout & Warnings', () => {
       });
     });
 
-    it('should have the correct intrinsic height when autoHeight={true}', () => {
-      render(
-        <div style={{ width: 300 }}>
-          <DataGrid {...baselineProps} headerHeight={40} rowHeight={30} autoHeight />
-        </div>,
-      );
-      expect(document.querySelector('.MuiDataGrid-main')!.clientHeight).to.equal(
-        40 + 30 * baselineProps.rows.length,
-      );
+    describe('autoHeight', () => {
+      it('should have the correct intrinsic height', () => {
+        render(
+          <div style={{ width: 300 }}>
+            <DataGrid {...baselineProps} headerHeight={40} rowHeight={30} autoHeight />
+          </div>,
+        );
+        expect(document.querySelector('.MuiDataGrid-main')!.clientHeight).to.equal(
+          40 + 30 * baselineProps.rows.length,
+        );
+      });
+
+      it('should include the scrollbar in the intrinsic height when there are more columns to show', function test() {
+        // On MacOS the scrollbar has zero width
+        if (/macintosh/i.test(window.navigator.userAgent)) {
+          this.skip();
+        }
+        render(
+          <div style={{ width: 150 }}>
+            <DataGrid
+              {...baselineProps}
+              headerHeight={40}
+              rowHeight={30}
+              columns={[{ field: 'brand' }, { field: 'year' }]}
+              autoHeight
+            />
+          </div>,
+        );
+        const gridWindow = document.querySelector('.MuiDataGrid-window');
+        const scrollBarSize = gridWindow!.scrollHeight - gridWindow!.clientHeight;
+        expect(scrollBarSize).not.to.equal(0);
+        expect(document.querySelector('.MuiDataGrid-main')!.clientHeight).to.equal(
+          scrollBarSize + 40 + 30 * baselineProps.rows.length,
+        );
+      });
     });
 
     // A function test counterpart of ScrollbarOverflowVerticalSnap.
