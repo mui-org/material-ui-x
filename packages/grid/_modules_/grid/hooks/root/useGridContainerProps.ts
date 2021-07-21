@@ -169,14 +169,15 @@ export const useGridContainerProps = (apiRef: GridApiRef) => {
       const viewportPageSize = Math.floor(viewportSizes.height / rowHeight);
 
       // Number of pages required to render the full set of rows in the viewport
-      const viewportMaxPage = Math.ceil(rowsCount / viewportPageSize) - 1;
+      const viewportMaxPages =
+        viewportPageSize > 0 ? Math.ceil(rowsCount / viewportPageSize) - 1 : 0;
 
       // We multiply by 2 for virtualization to work with useGridVirtualRows scroll system
       const renderingZonePageSize = viewportPageSize * 2;
       const renderingZoneHeight = renderingZonePageSize * rowHeight;
       const renderingZoneMaxScrollHeight = renderingZoneHeight - viewportSizes.height;
 
-      let totalHeight = viewportMaxPage * renderingZoneMaxScrollHeight + viewportSizes.height;
+      let totalHeight = viewportMaxPages * renderingZoneMaxScrollHeight + viewportSizes.height;
       const rowsLeftOnLastPage = rowsCount % viewportPageSize;
       if (rowsLeftOnLastPage > 0) {
         totalHeight = totalHeight - renderingZoneMaxScrollHeight + rowsLeftOnLastPage * rowHeight;
@@ -188,11 +189,11 @@ export const useGridContainerProps = (apiRef: GridApiRef) => {
         viewportPageSize,
         totalSizes: {
           width: columnsTotalWidth,
-          height: totalHeight || 1,
+          height: totalHeight,
         },
         dataContainerSizes: {
           width: columnsTotalWidth,
-          height: totalHeight || 1,
+          height: totalHeight,
         },
         renderingZonePageSize,
         renderingZone: {
@@ -201,7 +202,7 @@ export const useGridContainerProps = (apiRef: GridApiRef) => {
         },
         renderingZoneScrollHeight: renderingZoneMaxScrollHeight,
         windowSizes: windowSizesRef.current,
-        lastPage: viewportMaxPage,
+        lastPage: viewportMaxPages,
       };
 
       logger.debug('virtualized container props', indexes);

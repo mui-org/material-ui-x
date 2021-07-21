@@ -514,6 +514,16 @@ describe('<DataGrid /> - Layout & Warnings', () => {
       // It should not have a horizontal scrollbar
       expect(gridWindow!.scrollWidth - gridWindow!.clientWidth).to.equal(0);
     });
+
+    it('should have a horizontal scrollbar when there are more columns to show and no rows', () => {
+      render(
+        <div style={{ width: 150, height: 300 }}>
+          <DataGrid columns={[{ field: 'brand' }, { field: 'year' }]} rows={[]} />
+        </div>,
+      );
+      const gridWindow = document.querySelector('.MuiDataGrid-window');
+      expect(gridWindow!.scrollWidth - gridWindow!.clientWidth).not.to.equal(0);
+    });
   });
 
   describe('warnings', () => {
