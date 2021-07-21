@@ -517,7 +517,7 @@ describe('<DataGrid /> - Layout & Warnings', () => {
 
     it('should have a horizontal scrollbar when there are more columns to show and no rows', function test() {
       // On MacOS the scrollbar has zero width
-      if (!/macintosh/i.test(window.navigator.userAgent)) {
+      if (/macintosh/i.test(window.navigator.userAgent)) {
         this.skip();
       }
       render(
