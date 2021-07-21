@@ -515,7 +515,11 @@ describe('<DataGrid /> - Layout & Warnings', () => {
       expect(gridWindow!.scrollWidth - gridWindow!.clientWidth).to.equal(0);
     });
 
-    it('should have a horizontal scrollbar when there are more columns to show and no rows', () => {
+    it('should have a horizontal scrollbar when there are more columns to show and no rows', function test() {
+      // On MacOS the scrollbar has zero width
+      if (!/macintosh/i.test(window.navigator.userAgent)) {
+        this.skip();
+      }
       render(
         <div style={{ width: 150, height: 300 }}>
           <DataGrid columns={[{ field: 'brand' }, { field: 'year' }]} rows={[]} />
