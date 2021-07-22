@@ -101,7 +101,7 @@ export const useGridColumnResize = (
     });
   };
 
-  const handleResizeMouseUp = useEventCallback(() => {
+  const handleResizeMouseUp = useEventCallback((nativeEvent) => {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopListening();
 
@@ -109,13 +109,17 @@ export const useGridColumnResize = (
 
     clearTimeout(stopResizeEventTimeout.current);
     stopResizeEventTimeout.current = setTimeout(() => {
-      apiRef.current.publishEvent(GRID_COLUMN_RESIZE_STOP);
-      apiRef.current.publishEvent(GRID_COLUMN_WIDTH_CHANGE, {
-        element: colElementRef.current,
-        colDef: colDefRef.current,
-        api: apiRef,
-        width: colDefRef.current?.width,
-      });
+      apiRef.current.publishEvent(GRID_COLUMN_RESIZE_STOP, null, nativeEvent);
+      apiRef.current.publishEvent(
+        GRID_COLUMN_WIDTH_CHANGE,
+        {
+          element: colElementRef.current,
+          colDef: colDefRef.current,
+          api: apiRef,
+          width: colDefRef.current?.width,
+        },
+        nativeEvent,
+      );
     });
 
     logger.debug(
@@ -126,7 +130,7 @@ export const useGridColumnResize = (
   const handleResizeMouseMove = useEventCallback((nativeEvent) => {
     // Cancel move in case some other element consumed a mouseup event and it was not fired.
     if (nativeEvent.buttons === 0) {
-      handleResizeMouseUp();
+      handleResizeMouseUp(nativeEvent);
       return;
     }
 
@@ -137,12 +141,16 @@ export const useGridColumnResize = (
     newWidth = Math.max(colDefRef.current?.minWidth!, newWidth);
 
     updateWidth(newWidth);
-    apiRef.current.publishEvent(GRID_COLUMN_RESIZE, {
-      element: colElementRef.current,
-      colDef: colDefRef.current,
-      api: apiRef,
-      width: newWidth,
-    });
+    apiRef.current.publishEvent(
+      GRID_COLUMN_RESIZE,
+      {
+        element: colElementRef.current,
+        colDef: colDefRef.current,
+        api: apiRef,
+        width: newWidth,
+      },
+      nativeEvent,
+    );
   });
 
   const handleColumnResizeMouseDown = useEventCallback(
@@ -168,7 +176,7 @@ export const useGridColumnResize = (
       ) as HTMLDivElement;
 
       logger.debug(`Start Resize on col ${colDef.field}`);
-      apiRef.current.publishEvent(GRID_COLUMN_RESIZE_START, { field: colDef.field });
+      apiRef.current.publishEvent(GRID_COLUMN_RESIZE_START, { field: colDef.field }, event);
 
       colDefRef.current = colDef;
       colElementRef.current = apiRef.current!.columnHeadersElementRef?.current!.querySelector(
@@ -205,7 +213,7 @@ export const useGridColumnResize = (
 
     clearTimeout(stopResizeEventTimeout.current);
     stopResizeEventTimeout.current = setTimeout(() => {
-      apiRef.current.publishEvent(GRID_COLUMN_RESIZE_STOP);
+      apiRef.current.publishEvent(GRID_COLUMN_RESIZE_STOP, null, nativeEvent);
     });
 
     logger.debug(
@@ -232,12 +240,16 @@ export const useGridColumnResize = (
     newWidth = Math.max(colDefRef.current?.minWidth!, newWidth);
 
     updateWidth(newWidth);
-    apiRef.current.publishEvent(GRID_COLUMN_RESIZE, {
-      element: colElementRef.current,
-      colDef: colDefRef.current,
-      api: apiRef,
-      width: newWidth,
-    });
+    apiRef.current.publishEvent(
+      GRID_COLUMN_RESIZE,
+      {
+        element: colElementRef.current,
+        colDef: colDefRef.current,
+        api: apiRef,
+        width: newWidth,
+      },
+      nativeEvent,
+    );
   });
 
   const handleTouchStart = useEventCallback((event) => {
@@ -266,7 +278,7 @@ export const useGridColumnResize = (
     const colDef = apiRef.current.getColumn(field);
 
     logger.debug(`Start Resize on col ${colDef.field}`);
-    apiRef.current.publishEvent(GRID_COLUMN_RESIZE_START, { field });
+    apiRef.current.publishEvent(GRID_COLUMN_RESIZE_START, { field }, event);
 
     colDefRef.current = colDef;
     colElementRef.current = findHeaderElementFromField(

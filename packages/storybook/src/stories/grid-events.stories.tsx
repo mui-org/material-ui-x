@@ -73,7 +73,7 @@ export const OnCellClickNotPropagated = () => {
   const data = useData(2000, 200);
   const options: GridOptionsProp = {
     onCellClick: (params, event) => {
-      event.stopPropagation();
+      (event as React.SyntheticEvent).stopPropagation();
       action('cell click')(params);
     },
   };

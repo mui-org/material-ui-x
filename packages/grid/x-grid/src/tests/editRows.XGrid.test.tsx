@@ -101,7 +101,11 @@ describe('<XGrid /> - Edit Rows', () => {
   });
 
   it('should allow to stop double click using stopPropagation', () => {
-    render(<TestCase onCellDoubleClick={(params, event) => event.stopPropagation()} />);
+    render(
+      <TestCase
+        onCellDoubleClick={(params, event) => (event as React.SyntheticEvent).stopPropagation()}
+      />,
+    );
     const cell = getCell(1, 0);
     cell.focus();
     fireEvent.doubleClick(cell);
@@ -177,7 +181,7 @@ describe('<XGrid /> - Edit Rows', () => {
       code: 1,
       target: cell,
       isPropagationStopped: () => false,
-    });
+    } as any);
     // fireEvent.keyDown(cell, { key: 'a', code: 1, target: cell });
 
     expect(cell).to.have.class('MuiDataGrid-cell--editable');
@@ -328,28 +332,6 @@ describe('<XGrid /> - Edit Rows', () => {
     expect(cell).not.to.have.class('MuiDataGrid-cell--editing');
     expect(cell).to.have.text('1970');
     expect(getActiveCell()).to.equal('2-1');
-  });
-
-  it('should the focus to the new field', () => {
-    const handleCellBlur = (params, event) => {
-      if (params.cellMode === 'edit') {
-        event?.stopPropagation();
-      }
-    };
-    render(<TestCase onCellBlur={handleCellBlur} />);
-    // Turn first cell into edit mode
-    apiRef!.current.setCellMode(0, 'brand', 'edit');
-
-    // Turn second cell into edit mode
-    getCell(1, 0).focus();
-    apiRef!.current.setCellMode(1, 'brand', 'edit');
-    expect(document.querySelectorAll('input').length).to.equal(2);
-
-    // Try to focus the first cell's input
-    const input0 = getCell(0, 0).querySelector('input');
-    input0!.focus();
-    fireEvent.click(input0);
-    expect(document.activeElement).to.have.property('value', 'Nike');
   });
 
   it('should apply the valueParser before saving the value', () => {

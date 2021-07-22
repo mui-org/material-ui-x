@@ -105,7 +105,7 @@ export const useGridFocus = (apiRef: GridApiRef, props: Pick<GridComponentProps,
   );
 
   const handleDocumentClick = React.useCallback(
-    (event: MouseEvent) => {
+    (event: DocumentEventMap['click']) => {
       const isInsideFocusedCell = insideFocusedCell.current;
       insideFocusedCell.current = false;
 

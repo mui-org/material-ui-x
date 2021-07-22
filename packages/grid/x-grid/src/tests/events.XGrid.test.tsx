@@ -17,6 +17,7 @@ import {
   GridRowsProp,
   GridColumns,
   GRID_ROWS_SCROLL,
+  GRID_CELL_CSS_CLASS,
 } from '@material-ui/x-grid';
 import { getCell, getColumnHeaderCell, getRow } from 'test/utils/helperFn';
 import { spy } from 'sinon';
@@ -216,6 +217,30 @@ describe('<XGrid /> - Events Params', () => {
       const cell11 = getCell(1, 1);
       fireEvent.click(cell11);
       expect(eventStack).to.deep.equal([]);
+    });
+
+    it('should allow to prevent the default behavior', () => {
+      const preventDefault = (params, event) => {
+        event.defaultMuiPrevented = true;
+      };
+      render(<TestEvents onCellDoubleClick={preventDefault} />);
+      const cell = getCell(1, 1);
+      fireEvent.doubleClick(cell);
+      expect(cell).not.to.have.class(`${GRID_CELL_CSS_CLASS}--editing`);
+    });
+
+    it('should allow to prevent the default behavior while allowing the event to propagate', () => {
+      const preventDefault = (params, event) => {
+        event.defaultMuiPrevented = true;
+      };
+      render(<TestEvents onEditCellPropsChange={preventDefault} />);
+      const cell = getCell(1, 1);
+      cell.focus();
+      fireEvent.doubleClick(cell);
+      const input = cell.querySelector('input')!;
+      fireEvent.change(input, { target: { value: 'Lisa' } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+      expect(cell).to.have.text('Jack');
     });
 
     it('should select a row by default', () => {

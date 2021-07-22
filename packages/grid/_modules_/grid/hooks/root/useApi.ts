@@ -4,15 +4,26 @@ import { GridSubscribeEventOptions } from '../../utils/eventEmitter/GridEventEmi
 import { useLogger } from '../utils/useLogger';
 import { GRID_COMPONENT_ERROR, GRID_UNMOUNT } from '../../constants/eventsConstants';
 import { useGridApiMethod } from './useGridApiMethod';
+import { MuiEvent } from '../../models/gridOptions';
+
+const isSynthenticEvent = (event: any): event is React.SyntheticEvent => {
+  return event.isPropagationStopped !== undefined;
+};
 
 export function useApi(apiRef: GridApiRef): void {
   const logger = useLogger('useApi');
 
   const publishEvent = React.useCallback(
-    (name: string, params: any, event?: React.SyntheticEvent) => {
-      if (!event || !event.isPropagationStopped || !event.isPropagationStopped()) {
-        apiRef.current.emit(name, params, event);
+    (
+      name: string,
+      params: any,
+      event: MuiEvent<React.SyntheticEvent | DocumentEventMap[keyof DocumentEventMap] | {}> = {},
+    ) => {
+      event.defaultMuiPrevented = false;
+      if (event && isSynthenticEvent(event) && event.isPropagationStopped()) {
+        return;
       }
+      apiRef.current.emit(name, params, event);
     },
     [apiRef],
   );

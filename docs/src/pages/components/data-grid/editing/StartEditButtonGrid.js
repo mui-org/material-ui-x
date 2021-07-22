@@ -78,13 +78,13 @@ export default function StartEditButtonGrid() {
   }, []);
 
   const handleDoubleCellClick = React.useCallback((params, event) => {
-    event.stopPropagation();
+    event.defaultMuiPrevented = true;
   }, []);
 
   // Prevent from rolling back on escape
   const handleCellKeyDown = React.useCallback((params, event) => {
     if (['Escape', 'Delete', 'Backspace', 'Enter'].includes(event.key)) {
-      event.stopPropagation();
+      event.defaultMuiPrevented = true;
     }
   }, []);
 

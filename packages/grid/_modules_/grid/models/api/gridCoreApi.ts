@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { MuiEvent } from '../gridOptions';
 import {
   GridEventEmitter,
   GridSubscribeEventOptions,
@@ -52,7 +53,10 @@ export interface GridCoreApi extends GridEventEmitter {
    */
   subscribeEvent: (
     event: string,
-    handler: (params: any, event?: React.SyntheticEvent) => void,
+    handler: (
+      params: any,
+      event: MuiEvent<React.SyntheticEvent | DocumentEventMap[keyof DocumentEventMap] | {}>,
+    ) => void,
     options?: GridSubscribeEventOptions,
   ) => () => void;
   /**
@@ -60,7 +64,11 @@ export interface GridCoreApi extends GridEventEmitter {
    * @param {string} name The name of the event.
    * @param {...*} args Arguments to be passed to the handlers.
    */
-  publishEvent: (name: string, ...args: any[]) => void;
+  publishEvent: (
+    name: string,
+    params?: any,
+    event?: MuiEvent<React.SyntheticEvent | DocumentEventMap[keyof DocumentEventMap]>,
+  ) => void;
   /**
    * Displays the error overlay component.
    * @param {any} props Props to be passed to the `ErrorOverlay` component.

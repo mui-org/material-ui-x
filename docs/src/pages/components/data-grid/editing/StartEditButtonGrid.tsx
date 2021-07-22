@@ -8,7 +8,6 @@ import {
   useGridApiRef,
   XGrid,
   GridApiRef,
-  MuiEvent,
 } from '@material-ui/x-grid';
 import {
   randomCreatedDate,
@@ -83,32 +82,27 @@ export default function StartEditButtonGrid() {
     setSelectedCellParams(params);
   }, []);
 
-  const handleDoubleCellClick = React.useCallback(
-    (params: GridCellParams, event: React.SyntheticEvent) => {
-      event.stopPropagation();
-    },
-    [],
-  );
+  const handleDoubleCellClick = React.useCallback((params, event) => {
+    event.defaultMuiPrevented = true;
+  }, []);
 
   // Prevent from rolling back on escape
-  const handleCellKeyDown = React.useCallback(
-    (params, event: React.KeyboardEvent) => {
-      if (['Escape', 'Delete', 'Backspace', 'Enter'].includes(event.key)) {
-        event.stopPropagation();
-      }
-    },
-    [],
-  );
+  const handleCellKeyDown = React.useCallback((params, event) => {
+    if (
+      ['Escape', 'Delete', 'Backspace', 'Enter'].includes(
+        (event as React.KeyboardEvent).key,
+      )
+    ) {
+      event.defaultMuiPrevented = true;
+    }
+  }, []);
 
   // Prevent from committing on focus out
-  const handleCellFocusOut = React.useCallback(
-    (params, event?: MuiEvent<MouseEvent>) => {
-      if (params.cellMode === 'edit' && event) {
-        event.defaultMuiPrevented = true;
-      }
-    },
-    [],
-  );
+  const handleCellFocusOut = React.useCallback((params, event) => {
+    if (params.cellMode === 'edit' && event) {
+      event.defaultMuiPrevented = true;
+    }
+  }, []);
 
   return (
     <div style={{ height: 400, width: '100%' }}>

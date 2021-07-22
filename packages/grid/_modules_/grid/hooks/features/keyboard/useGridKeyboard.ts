@@ -65,9 +65,6 @@ export const useGridKeyboard = (apiRef: GridApiRef): void => {
       if ((event.target as any).nodeType === 1 && !isGridCellRoot(event.target as Element)) {
         return;
       }
-      if (event.isPropagationStopped()) {
-        return;
-      }
 
       // Get the most recent params because the cell mode may have changed by another listener
       const cellParams = apiRef.current.getCellParams(params.id, params.field);
@@ -108,9 +105,6 @@ export const useGridKeyboard = (apiRef: GridApiRef): void => {
   const handleColumnHeaderKeyDown = React.useCallback(
     (params: GridCellParams, event: React.KeyboardEvent) => {
       if (!isGridHeaderCellRoot(event.target as HTMLElement)) {
-        return;
-      }
-      if (event.isPropagationStopped()) {
         return;
       }
       if (isSpaceKey(event.key) && isGridHeaderCellRoot(event.target as HTMLElement)) {

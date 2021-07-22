@@ -60,5 +60,8 @@ export interface GridEditRowApi {
    * @param {React.SyntheticEvent} event The event to pass forward.
    * @returns {boolean} A boolean indicating if there is an error.
    */
-  commitCellChange: (params: GridCommitCellChangeParams, event?: React.SyntheticEvent) => boolean;
+  commitCellChange: (
+    params: GridCommitCellChangeParams,
+    event?: MouseEvent | React.SyntheticEvent,
+  ) => boolean;
 }

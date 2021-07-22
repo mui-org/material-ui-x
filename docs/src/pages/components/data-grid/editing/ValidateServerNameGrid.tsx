@@ -70,7 +70,7 @@ export default function ValidateServerNameGrid() {
           });
         }, 100);
 
-        event.stopPropagation();
+        event.defaultMuiPrevented = true;
       }
     },
     [apiRef],

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { MuiEvent } from '../../models/gridOptions';
 import { GridApiRef } from '../../models/api/gridApiRef';
 import { useLogger } from '../utils/useLogger';
 
@@ -12,7 +13,15 @@ export function useGridApiEventHandler(
 
   React.useEffect(() => {
     if (handler && eventName) {
-      return apiRef.current.subscribeEvent(eventName, handler, options);
+      const enhancedHandler = (
+        params: any,
+        event: MuiEvent<React.SyntheticEvent | DocumentEventMap[keyof DocumentEventMap] | {}>,
+      ) => {
+        if (!event.defaultMuiPrevented) {
+          handler(params, event);
+        }
+      };
+      return apiRef.current.subscribeEvent(eventName, enhancedHandler, options);
     }
 
     return undefined;
