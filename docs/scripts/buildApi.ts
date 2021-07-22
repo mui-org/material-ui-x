@@ -230,6 +230,7 @@ function run(argv: { outputDirectory?: string }) {
     'GridRowParams',
     'GridSelectionApi',
     'GridFilterApi',
+    'GridCsvExportApi',
   ];
 
   apisToGenerate.forEach((apiName) => {

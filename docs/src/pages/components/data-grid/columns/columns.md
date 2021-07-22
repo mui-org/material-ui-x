@@ -194,6 +194,8 @@ const columns: GridColDef[] = [
 
 {{"demo": "pages/components/data-grid/columns/RenderCellGrid.js", "bg": "inline"}}
 
+**Note**: It is recommended to also set a `valueFormatter` providing a representation for the value to be used when [exporting](/components/data-grid/export/) the data.
+
 #### Render edit cell
 
 The `renderCell` render function allows customizing the rendered in "view mode" only.

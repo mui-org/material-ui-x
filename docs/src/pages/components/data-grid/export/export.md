@@ -8,11 +8,13 @@ title: Data Grid - Export
 
 ## CSV export
 
-You are able to export the displayed data to CSV with an API call, or using the grid UI.
-
-To enable the CSV export you need to compose a toolbar containing the `GridToolbarExport` component, and apply it using the `Toolbar` key in the grid `components` prop.
+The DataGrid allows the data to be exported to CSV by composing a [toolbar](/components/data-grid/components/#toolbar) with the `GridToolbarExport` component. Use the `components` prop to assign the custom toolbar.
 
 {{"demo": "pages/components/data-grid/export/ExportSelectorGrid.js", "bg": "inline"}}
+
+Alternatively, you can export data using the imperative API available in XGrid:
+
+{{"demo": "pages/components/data-grid/export/CsvExportApiNoSnap.js", "bg": "inline", "hideToolbar": true}}
 
 ### Customize exported columns
 
@@ -35,6 +37,23 @@ Set `allColumns` in `csvOptions` to true to include hidden columns, instead of o
 
 ```jsx
 <DataGrid columns={[{ field: 'id', disableExport: true }, { field: 'brand' }]} />
+```
+
+### Export custom rendered cells
+
+When the value of a field is an object or a `renderCell` is provided, the CSV export might not display correctly the value.
+You can provide a [`valueFormatter`](/components/data-grid/columns/#value-formatter) with a string representation to be used.
+
+```jsx
+<DataGrid
+  columns={[
+    {
+      field: 'progress',
+      valueFormatter: ({ value }) => `${value * 100}%`,
+      renderCell: ({ value }) => <ProgressBar value={value} />,
+    },
+  ]}
+/>
 ```
 
 ## 🚧 Print
