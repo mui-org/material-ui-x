@@ -5,8 +5,12 @@ const CI = Boolean(process.env.CI);
 
 let build = `material-ui-x local ${new Date().toISOString()}`;
 
-if (process.env.CIRCLE_BUILD_URL) {
-  build = process.env.CIRCLE_BUILD_URL;
+if (process.env.CIRCLECI) {
+  const buildPrefix =
+    process.env.CIRCLE_PR_NUMBER !== undefined
+      ? process.env.CIRCLE_PR_NUMBER
+      : process.env.CIRCLE_BRANCH;
+  build = `${buildPrefix}: ${process.env.CIRCLE_BUILD_URL}`;
 }
 
 const browserStack = {
@@ -14,7 +18,7 @@ const browserStack = {
   accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
   build,
   // https://github.com/browserstack/api#timeout300
-  timeout: 4 * 60, // Maximum time before a worker is terminated. Default 5 minutes.
+  timeout: 6 * 60, // Maximum time before a worker is terminated. Default 5 minutes.
 };
 
 process.env.CHROME_BIN = playwright.chromium.executablePath();
