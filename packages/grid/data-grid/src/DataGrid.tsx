@@ -148,7 +148,7 @@ DataGrid.propTypes = {
       return new Error(
         [
           `Material-UI: \`<DataGrid disableMultipleColumnsFiltering={false} />\` is not a valid prop.`,
-          'Only single column sorting is available in the MIT version.',
+          'Only single column filtering is available in the MIT version.',
           '',
           'You need to upgrade to the XGrid component to unlock this feature.',
         ].join('\n'),
