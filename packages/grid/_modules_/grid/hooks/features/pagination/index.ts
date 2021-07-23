@@ -1,3 +1,3 @@
-export * from './gridPaginationState';
 export * from './gridPaginationSelector';
-export * from './useGridPagination';
+export * from './useGridPage';
+export * from './useGridPageSize';

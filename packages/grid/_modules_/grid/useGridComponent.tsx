@@ -12,7 +12,8 @@ import { useGridInfiniteLoader } from './hooks/features/infiniteLoader/useGridIn
 import { useGridKeyboard } from './hooks/features/keyboard/useGridKeyboard';
 import { useGridKeyboardNavigation } from './hooks/features/keyboard/useGridKeyboardNavigation';
 import { useLocaleText } from './hooks/features/localeText/useLocaleText';
-import { useGridPagination } from './hooks/features/pagination/useGridPagination';
+import { useGridPage } from './hooks/features/pagination/useGridPage';
+import { useGridPageSize } from './hooks/features/pagination/useGridPageSize';
 import { useGridPreferencesPanel } from './hooks/features/preferencesPanel/useGridPreferencesPanel';
 import { useGridEditRows } from './hooks/features/rows/useGridEditRows';
 import { useGridFreezeRows } from './hooks/features/rows/useGridFreezeRows';
@@ -63,7 +64,8 @@ export const useGridComponent = (apiRef: GridApiRef, props: GridComponentProps) 
   useGridVirtualRows(apiRef);
   useGridColumnReorder(apiRef);
   useGridColumnResize(apiRef, props);
-  useGridPagination(apiRef);
+  useGridPageSize(apiRef, props);
+  useGridPage(apiRef, props);
   useGridCsvExport(apiRef);
   useGridInfiniteLoader(apiRef, props);
   useGridClipboard(apiRef);

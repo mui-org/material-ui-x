@@ -87,6 +87,7 @@ export const useGridRows = (
         state.options.rowCount,
         getRowId,
       );
+
       return { ...state, rows: internalRowsState.current };
     });
   }, [getRowId, rows, setGridState]);

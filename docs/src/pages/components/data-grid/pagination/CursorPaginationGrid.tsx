@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  GridRowsProp,
-  DataGrid,
-  GridPageChangeParams,
-  GridRowId,
-} from '@material-ui/data-grid';
+import { GridRowsProp, DataGrid, GridRowId } from '@material-ui/data-grid';
 import {
   useDemoData,
   GridData,
@@ -46,10 +41,10 @@ export default function CursorPaginationGrid() {
   const [page, setPage] = React.useState(0);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const handlePageChange = (params: GridPageChangeParams) => {
+  const handlePageChange = (newPage: number) => {
     // We have the cursor, we can allow the page transition.
-    if (params.page === 0 || pagesNextCursor.current[params.page - 1]) {
-      setPage(params.page);
+    if (newPage === 0 || pagesNextCursor.current[newPage - 1]) {
+      setPage(newPage);
     }
   };
 

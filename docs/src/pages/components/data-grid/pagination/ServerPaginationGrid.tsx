@@ -1,9 +1,5 @@
 import * as React from 'react';
-import {
-  GridRowsProp,
-  DataGrid,
-  GridPageChangeParams,
-} from '@material-ui/data-grid';
+import { GridRowsProp, DataGrid } from '@material-ui/data-grid';
 import { useDemoData, GridData } from '@material-ui/x-grid-data-generator';
 
 function loadServerRows(page: number, data: GridData): Promise<any> {
@@ -23,10 +19,6 @@ export default function ServerPaginationGrid() {
   const [page, setPage] = React.useState(0);
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
-
-  const handlePageChange = (params: GridPageChangeParams) => {
-    setPage(params.page);
-  };
 
   React.useEffect(() => {
     let active = true;
@@ -57,7 +49,7 @@ export default function ServerPaginationGrid() {
         pageSize={5}
         rowCount={100}
         paginationMode="server"
-        onPageChange={handlePageChange}
+        onPageChange={(newPage) => setPage(newPage)}
         loading={loading}
       />
     </div>

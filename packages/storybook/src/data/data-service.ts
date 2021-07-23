@@ -28,7 +28,7 @@ export function getData(rowLength: number, colLength: number): GridData {
   }
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'id' },
+    { field: 'id', headerName: 'id', type: 'number' },
     { field: 'currencyPair', headerName: 'Currency Pair' },
   ];
   for (let j = 1; j <= pricesColLength; j += 1) {

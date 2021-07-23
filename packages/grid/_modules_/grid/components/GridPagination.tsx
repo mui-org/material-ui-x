@@ -44,6 +44,7 @@ export const GridPagination = React.forwardRef<
   const classes = useStyles();
   const apiRef = useGridApiContext();
   const paginationState = useGridSelector(apiRef, gridPaginationSelector);
+
   const lastPage = React.useMemo(
     () => Math.floor(paginationState.rowCount / (paginationState.pageSize || 1)),
     [paginationState.rowCount, paginationState.pageSize],

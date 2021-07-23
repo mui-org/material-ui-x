@@ -1,9 +1,6 @@
-import { GridFeatureMode } from '../../../models/gridFeatureMode';
-
 export interface GridPaginationState {
+  pageSize: number;
   page: number;
   pageCount: number;
-  pageSize: number;
   rowCount: number;
-  paginationMode: GridFeatureMode;
 }

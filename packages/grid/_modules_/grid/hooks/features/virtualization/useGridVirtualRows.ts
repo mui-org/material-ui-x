@@ -14,7 +14,6 @@ import {
 } from '../columns/gridColumnsSelector';
 import { useGridSelector } from '../core/useGridSelector';
 import { useGridState } from '../core/useGridState';
-import { GridPaginationState } from '../pagination/gridPaginationState';
 import { gridPaginationSelector } from '../pagination/gridPaginationSelector';
 import { gridRowCountSelector } from '../rows/gridRowsSelector';
 import { useGridApiMethod } from '../../root/useGridApiMethod';
@@ -50,8 +49,8 @@ export const useGridVirtualRows = (apiRef: GridApiRef): void => {
   const [gridState, setGridState, forceUpdate] = useGridState(apiRef);
   const options = useGridSelector(apiRef, optionsSelector);
   const rowHeight = useGridSelector(apiRef, gridDensityRowHeightSelector);
-  const paginationState = useGridSelector<GridPaginationState>(apiRef, gridPaginationSelector);
-  const totalRowCount = useGridSelector<number>(apiRef, gridRowCountSelector);
+  const paginationState = useGridSelector(apiRef, gridPaginationSelector);
+  const totalRowCount = useGridSelector(apiRef, gridRowCountSelector);
   const visibleColumns = useGridSelector(apiRef, visibleGridColumnsSelector);
   const columnsMeta = useGridSelector(apiRef, gridColumnsMetaSelector);
 
@@ -83,7 +82,7 @@ export const useGridVirtualRows = (apiRef: GridApiRef): void => {
       if (
         options.pagination &&
         paginationState.pageSize != null &&
-        paginationState.paginationMode === 'client'
+        options.paginationMode === 'client'
       ) {
         minRowIdx = paginationState.pageSize * paginationState.page;
       }
@@ -102,7 +101,7 @@ export const useGridVirtualRows = (apiRef: GridApiRef): void => {
       apiRef,
       options.pagination,
       paginationState.pageSize,
-      paginationState.paginationMode,
+      options.paginationMode,
       paginationState.page,
     ],
   );
@@ -335,16 +334,16 @@ export const useGridVirtualRows = (apiRef: GridApiRef): void => {
 
   React.useEffect(() => {
     if (
-      gridState.rendering.renderContext?.paginationCurrentPage !== gridState.pagination.page &&
+      gridState.rendering.renderContext?.paginationCurrentPage !== paginationState.page &&
       apiRef.current.updateViewport
     ) {
-      logger.debug(`State pagination.page changed to ${gridState.pagination.page}. `);
+      logger.debug(`State paginationState.page changed to ${paginationState.page}. `);
       apiRef.current.updateViewport(true);
       resetScroll();
     }
   }, [
     apiRef,
-    gridState.pagination.page,
+    paginationState.page,
     gridState.rendering.renderContext?.paginationCurrentPage,
     logger,
     resetScroll,

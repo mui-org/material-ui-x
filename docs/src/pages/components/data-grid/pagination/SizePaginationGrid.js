@@ -11,15 +11,11 @@ export default function SizePaginationGrid() {
     maxColumns: 6,
   });
 
-  const handlePageSizeChange = (params) => {
-    setPageSize(params.pageSize);
-  };
-
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         pageSize={pageSize}
-        onPageSizeChange={handlePageSizeChange}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         rowsPerPageOptions={[5, 10, 20]}
         pagination
         {...data}

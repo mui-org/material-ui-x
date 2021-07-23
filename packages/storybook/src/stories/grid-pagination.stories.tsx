@@ -2,13 +2,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import { useDemoData } from '@material-ui/x-grid-data-generator';
 import * as React from 'react';
 import { Story, Meta } from '@storybook/react';
-import {
-  GridApiRef,
-  useGridApiRef,
-  XGrid,
-  GridPageChangeParams,
-  GridRowsProp,
-} from '@material-ui/x-grid';
+import { GridApiRef, useGridApiRef, XGrid, GridRowsProp } from '@material-ui/x-grid';
 import Button from '@material-ui/core/Button';
 import Pagination from '@material-ui/lab/Pagination';
 import { action } from '@storybook/addon-actions';
@@ -192,88 +186,49 @@ function loadServerRows(params: { page: number; pageSize: number }): Promise<Gri
   });
 }
 
-export function ServerPaginationWithApi() {
-  const apiRef: GridApiRef = useGridApiRef();
-  const data = useData(1000, 10);
-  const [rows, setRows] = React.useState<GridRowsProp>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const defaultPageSize = 50;
-
-  const loadRows = React.useCallback((params: { page: number; pageSize: number }) => {
-    setLoading(true);
-    loadServerRows(params).then((newData) => {
-      setRows(newData.rows);
-      setLoading(false);
-    });
-  }, []);
-
-  const handleOnPageChange = React.useCallback(
-    (params) => {
-      action('onPageChange')(params);
-      loadRows(params);
-    },
-    [loadRows],
-  );
-
-  React.useEffect(() => {
-    loadRows({ page: 0, pageSize: defaultPageSize });
-  }, [apiRef, data, loadRows]);
-
-  return (
-    <div className="grid-container">
-      <XGrid
-        rows={rows}
-        columns={data.columns}
-        apiRef={apiRef}
-        pagination
-        onPageChange={handleOnPageChange}
-        pageSize={defaultPageSize}
-        rowCount={1000}
-        paginationMode={'server'}
-        loading={loading}
-      />
-    </div>
-  );
-}
-
 export function ServerPaginationWithEventHandler() {
-  const apiRef: GridApiRef = useGridApiRef();
   const data = useData(100, 10);
+  const [page, setPage] = React.useState(0);
+  const [pageSize, setPageSize] = React.useState(50);
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
-  const defaultPageSize = 50;
-
-  const loadRows = React.useCallback((params: { page: number; pageSize: number }) => {
-    setLoading(true);
-    loadServerRows(params).then((newData) => {
-      setRows(newData.rows);
-      setLoading(false);
-    });
-  }, []);
 
   const onPageChange = React.useCallback(
-    (params) => {
-      action('onPageChange')(params);
-      loadRows(params);
+    (newPage) => {
+      action('onPageChange')(newPage);
+      setPage(newPage);
     },
-    [loadRows],
+    [setPage],
+  );
+
+  const onPageSizeChange = React.useCallback(
+    (newPageSize) => {
+      action('onPageSizeChange')(newPageSize);
+      setPageSize(newPageSize);
+    },
+    [setPageSize],
   );
 
   React.useEffect(() => {
-    loadRows({ page: 0, pageSize: defaultPageSize });
-  }, [apiRef, data, loadRows]);
+    setLoading(true);
+    loadServerRows({ page, pageSize }).then((newData) => {
+      setRows(newData.rows);
+      setLoading(false);
+    });
+  }, [data, setRows, setLoading, page, pageSize]);
 
   return (
     <div className="grid-container">
       <XGrid
         rows={rows}
         columns={data.columns}
-        apiRef={apiRef}
         pagination
-        pageSize={defaultPageSize}
+        page={page}
+        pageSize={pageSize}
         rowCount={552}
         paginationMode={'server'}
         onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
         loading={loading}
       />
     </div>
@@ -295,7 +250,7 @@ export function Page1Prop() {
     </div>
   );
 }
-export function Page2Prop() {
+export function Page2PropSnap() {
   const data = useData(2000, 200);
 
   return (
@@ -386,10 +341,6 @@ export function ServerPaginationDocsDemo() {
   const [rows, setRows] = React.useState<GridRowsProp>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const handlePageChange = (params: GridPageChangeParams) => {
-    setPage(params.page);
-  };
-
   React.useEffect(() => {
     let active = true;
 
@@ -419,7 +370,7 @@ export function ServerPaginationDocsDemo() {
         pageSize={5}
         rowCount={100}
         paginationMode="server"
-        onPageChange={handlePageChange}
+        onPageChange={(newPage) => setPage(newPage)}
         loading={loading}
       />
     </div>

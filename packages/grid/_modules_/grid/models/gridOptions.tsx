@@ -11,7 +11,6 @@ import { GridRowId } from './gridRows';
 import { Logger } from './logger';
 import { GridCellParams } from './params/gridCellParams';
 import { GridColumnHeaderParams } from './params/gridColumnHeaderParams';
-import { GridPageChangeParams } from './params/gridPageChangeParams';
 import { GridRowParams } from './params/gridRowParams';
 import { GridSelectionModel } from './gridSelectionModel';
 import { GridSortDirection, GridSortModel } from './gridSortModel';
@@ -346,14 +345,14 @@ export interface GridOptions {
   onFilterModelChange?: (model: GridFilterModel) => void;
   /**
    * Callback fired when the current page has changed.
-   * @param param With all properties from [[GridPageChangeParams]].
+   * @param page Index of the page displayed on the Grid.
    */
-  onPageChange?: (param: GridPageChangeParams) => void;
+  onPageChange?: (page: number) => void;
   /**
    * Callback fired when the page size has changed.
-   * @param param With all properties from [[GridPageChangeParams]].
+   * @param pageSize Size of the page displayed on the Grid.
    */
-  onPageSizeChange?: (param: GridPageChangeParams) => void;
+  onPageSizeChange?: (pageSize: number) => void;
   /**
    * Callback fired when a click event comes from a row container element.
    * @param param With all properties from [[GridRowParams]].
@@ -498,7 +497,6 @@ export const DEFAULT_GRID_OPTIONS: GridOptions = {
   filterMode: GridFeatureModeConstant.client,
   headerHeight: 56,
   localeText: GRID_DEFAULT_LOCALE_TEXT,
-  pageSize: 100,
   paginationMode: GridFeatureModeConstant.client,
   rowHeight: 52,
   rowsPerPageOptions: [25, 50, 100],

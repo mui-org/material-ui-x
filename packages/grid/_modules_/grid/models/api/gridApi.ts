@@ -11,7 +11,8 @@ import { GridEventsApi } from './gridEventsApi';
 import { GridFilterApi } from './gridFilterApi';
 import { GridFocusApi } from './gridFocusApi';
 import { GridLocaleTextApi } from './gridLocaleTextApi';
-import { GridPaginationApi } from './gridPaginationApi';
+import { GridPageApi } from './gridPageApi';
+import { GridPageSizeApi } from './gridPageSizeApi';
 import { GridParamsApi } from './gridParamsApi';
 import { GridPreferencesPanelApi } from './gridPreferencesPanelApi';
 import { GridRowApi } from './gridRowApi';
@@ -36,7 +37,8 @@ export interface GridApi
     GridSelectionApi,
     GridSortApi,
     GridVirtualizationApi,
-    GridPaginationApi,
+    GridPageApi,
+    GridPageSizeApi,
     GridCsvExportApi,
     GridFocusApi,
     GridFilterApi,
