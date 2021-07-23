@@ -448,7 +448,9 @@ describe('<XGrid /> - Rows', () => {
       });
 
       it('should paginate small dataset in auto page-size #1492', () => {
-        render(<TestCaseVirtualization pagination autoPageSize height={496} nbRows={9} />);
+        render(
+          <TestCaseVirtualization pagination autoPageSize height={496} nbCols={1} nbRows={9} />,
+        );
         const gridWindow = document.querySelector('.MuiDataGrid-window')!;
 
         const lastCell = document.querySelector(
