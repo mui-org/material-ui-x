@@ -1,3 +1,4 @@
+export * from './base';
 export * from './cell';
 export * from './containers';
 export * from './columnHeaders';

@@ -1,3 +1,4 @@
+import { LicenseStatus } from '@material-ui/x-license';
 import { getInitialGridColumnsState, GridInternalColumns } from '../../../models/colDef/gridColDef';
 import {
   GridContainerProps,
@@ -8,15 +9,15 @@ import { GridEditRowsModel } from '../../../models/gridEditRowModel';
 import { DEFAULT_GRID_OPTIONS, GridOptions } from '../../../models/gridOptions';
 import { GridColumnMenuState } from '../columnMenu/columnMenuState';
 import {
-  GridColumnReorderState,
   getInitialGridColumnReorderState,
+  GridColumnReorderState,
 } from '../columnReorder/columnReorderState';
 import {
   getInitialGridColumnResizeState,
   GridColumnResizeState,
 } from '../columnResize/columnResizeState';
-import { GridGridDensity, getInitialGridDensityState } from '../density/densityState';
-import { GridFilterModelState, getInitialGridFilterState } from '../filter/gridFilterModelState';
+import { getInitialGridDensityState, GridGridDensity } from '../density/densityState';
+import { getInitialGridFilterState, GridFilterModelState } from '../filter/gridFilterModelState';
 import {
   getInitialVisibleGridRowsState,
   VisibleGridRowsState,
@@ -55,10 +56,13 @@ export interface GridState {
   preferencePanel: GridPreferencePanelState;
   density: GridGridDensity;
   error?: any;
+  verifyLicense?: boolean;
+  licenseStatus: LicenseStatus;
 }
 
 export const getInitialGridState: () => GridState = () => ({
   rows: getInitialGridRowState(),
+  licenseStatus: LicenseStatus.NotFound,
   editRows: {},
   pagination: {
     page: 0,

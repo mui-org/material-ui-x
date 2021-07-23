@@ -53,10 +53,6 @@ export interface GridComponentProps extends GridOptionsProp {
    */
   getRowId?: GridRowIdGetter;
   /**
-   * @internal enum
-   */
-  licenseStatus: string;
-  /**
    * If `true`, a  loading overlay is displayed.
    */
   loading?: boolean;

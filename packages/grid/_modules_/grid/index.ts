@@ -5,7 +5,3 @@ export * from './locales';
 export * from './models';
 export * from './utils';
 export * from './GridComponentProps';
-export * from './GridComponent';
-export * from './useGridComponent';
-export * from './GridHeaderPlaceholder';
-export * from './GridFooterPlaceholder';

@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { useGridApiContext } from './hooks/root/useGridApiContext';
-import { GridRootPropsContext } from './context/GridRootPropsContext';
-import { useGridSelector } from './hooks/features/core/useGridSelector';
-import { visibleGridRowCountSelector } from './hooks/features/filter/gridFilterSelector';
-import { gridRowCountSelector } from './hooks/features/rows/gridRowsSelector';
+import { GridRootPropsContext } from '../../context/GridRootPropsContext';
+import { useGridSelector } from '../../hooks/features/core/useGridSelector';
+import { visibleGridRowCountSelector } from '../../hooks/features/filter/gridFilterSelector';
+import { gridRowCountSelector } from '../../hooks/features/rows/gridRowsSelector';
+import { useGridApiContext } from '../../hooks/root/useGridApiContext';
 
 export function GridOverlays() {
   const apiRef = useGridApiContext();

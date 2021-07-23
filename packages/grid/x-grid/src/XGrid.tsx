@@ -1,8 +1,19 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { LicenseInfo, useLicenseVerifier } from '@material-ui/x-license';
+import { LicenseInfo } from '@material-ui/x-license';
 import { ponyfillGlobal } from '@material-ui/utils';
-import { GridComponent, GridComponentProps, useThemeProps } from '../../_modules_/grid';
+import {
+  DEFAULT_GRID_OPTIONS,
+  GridComponentProps,
+  GridBody,
+  GridErrorHandler,
+  GridFooterPlaceholder,
+  GridHeaderPlaceholder,
+  GridRoot,
+  useGridApiRef,
+} from '../../_modules_/grid';
+import { GridContextProvider } from '../../_modules_/grid/context/GridContextProvider';
+import { useXGridComponent } from './useXGridComponent';
 
 // This is the package release date. Each package version should update this const
 // automatically when a new version is published on npm.
@@ -16,14 +27,26 @@ if (process.env.NODE_ENV !== 'production' && RELEASE_INFO === '__RELEASE' + '_IN
 
 LicenseInfo.setReleaseInfo(RELEASE_INFO);
 
-export type XGridProps = Omit<GridComponentProps, 'licenseStatus'>;
+export type XGridProps = GridComponentProps;
 
 const XGridRaw = React.forwardRef<HTMLDivElement, XGridProps>(function XGrid(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiDataGrid' });
-  const licenseStatus = useLicenseVerifier();
+  const apiRef = useGridApiRef(inProps.apiRef);
 
-  return <GridComponent ref={ref} {...props} licenseStatus={licenseStatus.toString()} />;
+  useXGridComponent(apiRef, inProps);
+
+  return (
+    <GridContextProvider apiRef={apiRef} props={inProps}>
+      <GridRoot ref={ref}>
+        <GridErrorHandler>
+          <GridHeaderPlaceholder />
+          <GridBody />
+          <GridFooterPlaceholder />
+        </GridErrorHandler>
+      </GridRoot>
+    </GridContextProvider>
+  );
 });
+XGridRaw.defaultProps = DEFAULT_GRID_OPTIONS;
 
 export const XGrid = React.memo(XGridRaw);
 

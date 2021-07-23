@@ -195,7 +195,7 @@ describe('<DataGrid /> - Selection', () => {
               },
             ]}
             columns={[{ field: 'brand', width: 100 }]}
-            selectionModel={1}
+            selectionModel={[1]}
           />
         </div>,
       );
@@ -234,7 +234,7 @@ describe('<DataGrid /> - Selection', () => {
       const row0 = getRow(0);
       expect(row0).to.have.class('Mui-selected');
 
-      setProps({ selectionModel: 1 });
+      setProps({ selectionModel: [1] });
       // TODO fix this assertion. The model is forced from the outside, hence shouldn't change.
       // https://github.com/mui-org/material-ui-x/issues/190
       expect(row0).not.to.have.class('Mui-selected');
@@ -265,11 +265,12 @@ describe('<DataGrid /> - Selection', () => {
           </div>
         );
       }
-      const { setProps } = render(<Demo selectionModel={0} />);
+      const selectionModel = [0];
+      const { setProps } = render(<Demo selectionModel={selectionModel} />);
       expect(onSelectionModelChange.callCount).to.equal(0);
       const firstRow = getRow(0);
       expect(firstRow).to.have.class('Mui-selected');
-      setProps({ selectionModel: 0 });
+      setProps({ selectionModel });
       expect(onSelectionModelChange.callCount).to.equal(0);
       expect(getRow(0)).to.have.class('Mui-selected');
     });
@@ -288,7 +289,7 @@ describe('<DataGrid /> - Selection', () => {
           },
         ],
         columns: [{ field: 'brand', width: 100 }],
-        selectionModel: 1,
+        selectionModel: [1],
         isRowSelectable: (params) => params.id > 0,
       };
 
@@ -304,7 +305,7 @@ describe('<DataGrid /> - Selection', () => {
       expect(getRow(0)).not.to.have.class('Mui-selected');
       expect(getRow(1)).to.have.class('Mui-selected');
 
-      setProps({ selectionModel: 0 });
+      setProps({ selectionModel: [0] });
       expect(getRow(0)).to.have.class('Mui-selected');
       expect(getRow(1)).not.to.have.class('Mui-selected');
     });

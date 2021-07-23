@@ -1,3 +1,3 @@
-import { GridRowId } from '../../../models/gridRows';
+import { GridSelectionModel } from '../../../models/gridSelectionModel';
 
-export type GridSelectionState = GridRowId[];
+export type GridSelectionState = GridSelectionModel;

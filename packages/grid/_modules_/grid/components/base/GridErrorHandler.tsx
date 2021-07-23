@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { GridMainContainer } from './components/containers/GridMainContainer';
-import { ErrorBoundary } from './components/ErrorBoundary';
-import { useGridApiContext } from './hooks/root/useGridApiContext';
-import { GridRootPropsContext } from './context/GridRootPropsContext';
-import { useGridState } from './hooks/features/core/useGridState';
-import { useLogger } from './hooks/utils/useLogger';
+import { GridRootPropsContext } from '../../context/GridRootPropsContext';
+import { useGridState } from '../../hooks/features/core/useGridState';
+import { useGridApiContext } from '../../hooks/root/useGridApiContext';
+import { useLogger } from '../../hooks/utils/useLogger';
+import { GridMainContainer } from '../containers/GridMainContainer';
+import { ErrorBoundary } from '../ErrorBoundary';
 
 export function GridErrorHandler(props) {
   const { children } = props;

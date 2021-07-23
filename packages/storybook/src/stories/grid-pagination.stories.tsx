@@ -38,7 +38,7 @@ export function PageSize100() {
 
   return (
     <div className="grid-container">
-      <XGrid rows={data.rows} columns={data.columns} pagination pageSize={100} />
+      <DataGrid rows={data.rows} columns={data.columns} pagination pageSize={100} />
     </div>
   );
 }
