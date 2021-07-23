@@ -107,8 +107,10 @@ describe('<XGrid /> - Columns', () => {
       fireEvent.mouseDown(separator, { clientX: 100 });
       fireEvent.mouseMove(separator, { clientX: 110, buttons: 1 });
       fireEvent.mouseUp(separator);
-      expect(getColumnHeaderCell(0).style.width).to.equal('110px');
-      expect(getCell(1, 0).style.width).to.equal('110px');
+      // @ts-expect-error need to migrate helpers to TypeScript
+      expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '110px' });
+      // @ts-expect-error need to migrate helpers to TypeScript
+      expect(getCell(1, 0)).toHaveInlineStyle({ width: '110px' });
     });
 
     it('should allow to resize columns with the touch', function test() {
@@ -130,8 +132,10 @@ describe('<XGrid /> - Columns', () => {
       fireEvent.touchEnd(separator, {
         changedTouches: [new Touch({ identifier: now, target: separator, clientX: 110 })],
       });
-      expect(getColumnHeaderCell(0).style.width).to.equal('110px');
-      expect(getCell(1, 0).style.width).to.equal('110px');
+      // @ts-expect-error need to migrate helpers to TypeScript
+      expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '110px' });
+      // @ts-expect-error need to migrate helpers to TypeScript
+      expect(getCell(1, 0)).toHaveInlineStyle({ width: '110px' });
     });
 
     it('should call onColumnResize during resizing', () => {
@@ -163,6 +167,159 @@ describe('<XGrid /> - Columns', () => {
       clock.tick(0);
       expect(onColumnWidthChange.callCount).to.equal(1);
       expect(onColumnWidthChange.args[0][0].width).to.equal(120);
+    });
+
+    describe('flex resizing', () => {
+      before(function beforeHook() {
+        if (isJSDOM) {
+          // Need layouting
+          this.skip();
+        }
+      });
+
+      it('should resize the flex width after resizing another column with api', () => {
+        const twoColumns = [
+          { field: 'id', width: 100, flex: 1 },
+          { field: 'brand', width: 100 },
+        ];
+
+        render(<Test columns={twoColumns} />);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '198px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '100px' });
+
+        apiRef!.current.setColumnWidth('brand', 150);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '148px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '150px' });
+      });
+
+      it('should resize the flex width after resizing a column with the separator', () => {
+        const twoColumns = [
+          { field: 'id', width: 100, flex: 1 },
+          { field: 'brand', width: 100 },
+        ];
+
+        render(<Test columns={twoColumns} />);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '198px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '100px' });
+
+        const separator = getColumnHeaderCell(1).querySelector(
+          `.${GRID_COLUMN_HEADER_SEPARATOR_RESIZABLE_CSS_CLASS}`,
+        );
+
+        fireEvent.mouseDown(separator, { clientX: 100 });
+        fireEvent.mouseMove(separator, { clientX: 150, buttons: 1 });
+        fireEvent.mouseUp(separator);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '148px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '150px' });
+      });
+
+      it('should not resize a flex column under its minWidth property (api resize)', () => {
+        const twoColumns = [
+          { field: 'id', minWidth: 175, flex: 1 },
+          { field: 'brand', width: 100 },
+        ];
+
+        render(<Test columns={twoColumns} />);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '198px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '100px' });
+
+        apiRef!.current.setColumnWidth('brand', 150);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '175px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '150px' });
+      });
+
+      it('should not resize a flex column under its minWidth property (separator resize)', () => {
+        const twoColumns = [
+          { field: 'id', minWidth: 175, flex: 1 },
+          { field: 'brand', width: 100 },
+        ];
+
+        render(<Test columns={twoColumns} />);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '198px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '100px' });
+
+        const separator = getColumnHeaderCell(1).querySelector(
+          `.${GRID_COLUMN_HEADER_SEPARATOR_RESIZABLE_CSS_CLASS}`,
+        );
+
+        fireEvent.mouseDown(separator, { clientX: 100 });
+        fireEvent.mouseMove(separator, { clientX: 150, buttons: 1 });
+        fireEvent.mouseUp(separator);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '175px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '150px' });
+      });
+
+      it('should be able to resize a flex column under its width property (api resize)', () => {
+        const twoColumns = [
+          { field: 'id', width: 175, flex: 1 },
+          { field: 'brand', width: 100 },
+        ];
+
+        render(<Test columns={twoColumns} />);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '198px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '100px' });
+
+        apiRef!.current.setColumnWidth('brand', 150);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '148px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '150px' });
+      });
+
+      it('should be able to resize a flex column under its width property (separator resize)', () => {
+        const twoColumns = [
+          { field: 'id', width: 175, flex: 1 },
+          { field: 'brand', width: 100 },
+        ];
+
+        render(<Test columns={twoColumns} />);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '198px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '100px' });
+
+        const separator = getColumnHeaderCell(1).querySelector(
+          `.${GRID_COLUMN_HEADER_SEPARATOR_RESIZABLE_CSS_CLASS}`,
+        );
+
+        fireEvent.mouseDown(separator, { clientX: 100 });
+        fireEvent.mouseMove(separator, { clientX: 150, buttons: 1 });
+        fireEvent.mouseUp(separator);
+
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(0)).toHaveInlineStyle({ width: '148px' });
+        // @ts-expect-error need to migrate helpers to TypeScript
+        expect(getColumnHeaderCell(1)).toHaveInlineStyle({ width: '150px' });
+      });
     });
   });
 });

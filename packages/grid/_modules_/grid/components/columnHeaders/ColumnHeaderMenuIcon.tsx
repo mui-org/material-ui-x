@@ -2,10 +2,10 @@ import * as React from 'react';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import { useGridApiContext } from '../../hooks/root/useGridApiContext';
-import { GridColDef } from '../../models/colDef/gridColDef';
+import { GridStateColDef } from '../../models/colDef/gridColDef';
 
 export interface ColumnHeaderMenuIconProps {
-  column: GridColDef;
+  column: GridStateColDef;
   columnMenuId: string;
   columnMenuButtonId: string;
   open: boolean;

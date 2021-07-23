@@ -32,7 +32,7 @@ describe('<XGrid /> - Layout', () => {
     }
   });
 
-  // Adapation of describeConformance()
+  // Adaptation of describeConformance()
   describe('Material-UI component API', () => {
     it(`attaches the ref`, () => {
       const ref = React.createRef<HTMLDivElement>();

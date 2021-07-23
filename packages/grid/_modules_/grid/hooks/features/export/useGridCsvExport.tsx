@@ -10,7 +10,7 @@ import { GridExportCsvOptions } from '../../../models/gridExport';
 import { useLogger } from '../../utils/useLogger';
 import { exportAs } from '../../../utils';
 import { buildCSV } from './serializers/csvSerializer';
-import { GridColDef } from '../../../models';
+import { GridStateColDef } from '../../../models';
 
 export const useGridCsvExport = (apiRef: GridApiRef): void => {
   const logger = useLogger('useGridCsvExport');
@@ -23,12 +23,12 @@ export const useGridCsvExport = (apiRef: GridApiRef): void => {
     (options?: GridExportCsvOptions): string => {
       logger.debug(`Get data as CSV`);
 
-      let exportedColumns: GridColDef[];
+      let exportedColumns: GridStateColDef[];
 
       if (options?.fields) {
         exportedColumns = options.fields
           .map((field) => columns.find((column) => column.field === field))
-          .filter((column): column is GridColDef => !!column);
+          .filter((column): column is GridStateColDef => !!column);
       } else {
         const validColumns = options?.allColumns ? columns : visibleColumns;
 

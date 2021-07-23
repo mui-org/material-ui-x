@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ownerDocument } from '@material-ui/core/utils';
-import { GridColDef } from '../../../models/colDef';
+import { GridStateColDef } from '../../../models/colDef';
 import { useLogger } from '../../utils';
 import { useEventCallback } from '../../../utils/material-ui-utils';
 import {
@@ -77,7 +77,7 @@ export const useGridColumnResize = (
 ) => {
   const logger = useLogger('useGridColumnResize');
   const [, setGridState, forceUpdate] = useGridState(apiRef);
-  const colDefRef = React.useRef<GridColDef>();
+  const colDefRef = React.useRef<GridStateColDef>();
   const colElementRef = React.useRef<HTMLDivElement>();
   const colCellElementsRef = React.useRef<NodeListOf<Element>>();
   const initialOffset = React.useRef<number>();
@@ -105,7 +105,7 @@ export const useGridColumnResize = (
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopListening();
 
-    apiRef.current!.updateColumn(colDefRef.current as GridColDef);
+    apiRef.current!.updateColumn(colDefRef.current!);
 
     clearTimeout(stopResizeEventTimeout.current);
     stopResizeEventTimeout.current = setTimeout(() => {
@@ -201,7 +201,7 @@ export const useGridColumnResize = (
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     stopListening();
 
-    apiRef.current!.updateColumn(colDefRef.current as GridColDef);
+    apiRef.current!.updateColumn(colDefRef.current!);
 
     clearTimeout(stopResizeEventTimeout.current);
     stopResizeEventTimeout.current = setTimeout(() => {
@@ -278,7 +278,7 @@ export const useGridColumnResize = (
     ) as NodeListOf<Element>;
 
     initialOffset.current =
-      (colDefRef.current.width as number) -
+      colDefRef.current!.computedWidth -
       (touch.clientX - colElementRef.current!.getBoundingClientRect().left);
 
     const doc = ownerDocument(event.currentTarget as HTMLElement);

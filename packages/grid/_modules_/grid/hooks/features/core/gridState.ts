@@ -1,4 +1,4 @@
-import { getInitialGridColumnsState, GridInternalColumns } from '../../../models/colDef/gridColDef';
+import { getInitialGridColumnsState, GridColumnsState } from '../../../models/colDef/gridColDef';
 import {
   GridContainerProps,
   GridScrollBarState,
@@ -38,7 +38,7 @@ export interface GridState {
   pagination: GridPaginationState;
   options: GridOptions;
   isScrolling: boolean;
-  columns: GridInternalColumns;
+  columns: GridColumnsState;
   columnReorder: GridColumnReorderState;
   columnResize: GridColumnResizeState;
   columnMenu: GridColumnMenuState;

@@ -13,12 +13,12 @@ import { renderStateSelector } from '../../hooks/features/virtualization/renderi
 import { gridDensityHeaderHeightSelector } from '../../hooks/features/density/densitySelector';
 import { gridColumnMenuStateSelector } from '../../hooks/features/columnMenu/columnMenuSelector';
 import { optionsSelector } from '../../hooks/utils/optionsSelector';
-import { GridColumns } from '../../models/colDef/gridColDef';
+import { GridStateColDef } from '../../models/colDef/gridColDef';
 import { useGridApiContext } from '../../hooks/root/useGridApiContext';
 import { GridColumnHeaderItem } from './GridColumnHeaderItem';
 
 export interface GridColumnHeadersItemCollectionProps {
-  columns: GridColumns;
+  columns: GridStateColDef[];
 }
 
 export function GridColumnHeadersItemCollection(props: GridColumnHeadersItemCollectionProps) {

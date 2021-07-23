@@ -18,7 +18,7 @@ import {
   GRID_COLUMN_HEADER_FOCUS,
   GRID_COLUMN_HEADER_BLUR,
 } from '../../constants/eventsConstants';
-import { GridColDef, GRID_NUMBER_COLUMN_TYPE } from '../../models/colDef/index';
+import { GRID_NUMBER_COLUMN_TYPE, GridStateColDef } from '../../models/colDef/index';
 import { GridOptions } from '../../models/gridOptions';
 import { GridSortDirection } from '../../models/gridSortModel';
 import { useGridApiContext } from '../../hooks/root/useGridApiContext';
@@ -32,7 +32,7 @@ import { isFunction } from '../../utils/utils';
 
 interface GridColumnHeaderItemProps {
   colIndex: number;
-  column: GridColDef;
+  column: GridStateColDef;
   columnMenuOpen: boolean;
   headerHeight: number;
   isDragging: boolean;
@@ -147,7 +147,7 @@ export function GridColumnHeaderItem(props: GridColumnHeaderItemProps) {
     ...classNames,
   );
 
-  const width = column.width!;
+  const width = column.computedWidth;
 
   let ariaSort: any;
   if (sortDirection != null) {

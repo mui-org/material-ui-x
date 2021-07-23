@@ -1,4 +1,4 @@
-import { GridColDef, GridColumns, GridColumnsMeta } from '../colDef/gridColDef';
+import { GridColDef, GridColumnsMeta, GridStateColDef } from '../colDef/gridColDef';
 
 /**
  * The column API interface that is available in the grid [[apiRef]].
@@ -7,19 +7,19 @@ export interface GridColumnApi {
   /**
    * Returns the [[GridColDef]] for the given `field`.
    * @param {string} field The column field.
-   * @returns {{GridColDef}} The [[GridColDef]].
+   * @returns {{GridStateColDef}} The [[GridStateColDef]].
    */
-  getColumn: (field: string) => GridColDef;
+  getColumn: (field: string) => GridStateColDef;
   /**
    * Returns an array of [[GridColDef]] containing all the column definitions.
-   * @returns {GridColumns[]} An array of [[GridColDef]].
+   * @returns {GridStateColDef[]} An array of [[GridStateColDef]].
    */
-  getAllColumns: () => GridColumns;
+  getAllColumns: () => GridStateColDef[];
   /**
    * Returns the currently visible columns.
-   * @returns {GridColDef[]} An array of [[GridColDef]].
+   * @returns {GridStateColDef[]} An array of [[GridStateColDef]].
    */
-  getVisibleColumns: () => GridColumns;
+  getVisibleColumns: () => GridStateColDef[];
   /**
    * Returns the [[GridColumnsMeta]] for each column.
    * @returns {GridColumnsMeta[]} All [[GridColumnsMeta]] objects.

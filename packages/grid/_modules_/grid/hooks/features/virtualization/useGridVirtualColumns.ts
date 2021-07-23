@@ -122,7 +122,7 @@ export const useGridVirtualColumns = (
         newRenderedColState.rightEmptyWidth =
           columnsMeta.totalWidth -
           columnsMeta.positions[newRenderedColState.lastColIdx] -
-          visibleColumns[newRenderedColState.lastColIdx].width!;
+          visibleColumns[newRenderedColState.lastColIdx].computedWidth;
       } else if (!options.disableExtendRowFullWidth) {
         newRenderedColState.rightEmptyWidth =
           apiRef.current.state.viewportSizes.width - columnsMeta.totalWidth;
