@@ -115,7 +115,7 @@ module.exports = function setKarmaConfig(config) {
     newConfig = {
       ...baseConfig,
       browserStack,
-      browsers: baseConfig.browsers.concat(['chrome', 'firefox', 'safari', 'edge']),
+      browsers: baseConfig.browsers.concat(['chrome', 'safari']),
       plugins: baseConfig.plugins.concat(['karma-browserstack-launcher']),
       customLaunchers: {
         ...baseConfig.customLaunchers,
@@ -126,13 +126,6 @@ module.exports = function setKarmaConfig(config) {
           browser: 'chrome',
           browser_version: '84.0',
         },
-        firefox: {
-          base: 'BrowserStack',
-          os: 'Windows',
-          os_version: '10',
-          browser: 'firefox',
-          browser_version: '78.0',
-        },
         safari: {
           base: 'BrowserStack',
           os: 'OS X',
@@ -141,13 +134,6 @@ module.exports = function setKarmaConfig(config) {
           // We support 12.2 on iOS.
           // However, 12.1 is very flaky on desktop (mobile is always flaky).
           browser_version: '13.0',
-        },
-        edge: {
-          base: 'BrowserStack',
-          os: 'Windows',
-          os_version: '10',
-          browser: 'edge',
-          browser_version: '85.0',
         },
       },
     };
