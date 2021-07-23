@@ -58,7 +58,7 @@ export function GridEditSingleSelectCell(props: GridCellParams & SelectProps) {
       open
       {...other}
     >
-      {colDef.valueOptions.map(renderSingleSelectOptions)}
+      {colDef.valueOptions?.map(renderSingleSelectOptions)}
     </Select>
   );
 }

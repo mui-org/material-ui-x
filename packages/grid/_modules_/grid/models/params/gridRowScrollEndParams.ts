@@ -1,4 +1,5 @@
-import { GridColumns } from '../colDef/gridColDef';
+import type { GridColumns } from '../colDef';
+import type { GridApiRef } from '../api';
 
 /**
  * Object passed as parameter in the onRowsScrollEnd callback.
@@ -19,5 +20,5 @@ export interface GridRowScrollEndParams {
   /**
    * API ref that let you manipulate the grid.
    */
-  api: any;
+  api: GridApiRef;
 }

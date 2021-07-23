@@ -1,3 +1,6 @@
+import type { GridApi } from '../api';
+import type { GridColDef } from '../colDef';
+
 /**
  * Object passed as parameter of the column order change event.
  */
@@ -13,7 +16,7 @@ export interface GridColumnOrderChangeParams {
   /**
    * The column of the current header component.
    */
-  colDef: any;
+  colDef: GridColDef;
   /**
    * The target column index.
    */
@@ -25,5 +28,5 @@ export interface GridColumnOrderChangeParams {
   /**
    * API ref that let you manipulate the grid.
    */
-  api: any;
+  api: GridApi;
 }

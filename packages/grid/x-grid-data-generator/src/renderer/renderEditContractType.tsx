@@ -32,9 +32,9 @@ function EditContractType(props: GridCellParams) {
 
   const handleChange = (event) => {
     const editProps = { value: event.target.value };
-    api.setEditCellProps({ id, field, props: editProps }, event);
+    api.setEditCellProps({ id, field, props: editProps });
     if (!event.key) {
-      api.commitCellChange({ id, field, props: editProps });
+      api.commitCellChange({ id, field });
       api.setCellMode(id, field, 'view');
     }
   };

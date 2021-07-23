@@ -47,11 +47,11 @@ interface GridRowParams {
   /**
    * All grid columns.
    */
-  columns: any;
+  columns: GridColumns;
   /**
    * GridApiRef that let you manipulate the grid.
    */
-  api: any;
+  api: GridApi;
   /**
    * Get the cell value of a row and field.
    * @param id

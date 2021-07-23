@@ -128,7 +128,7 @@ export function GridColumnHeaderItem(props: GridColumnHeaderItemProps) {
 
   if (column.headerClassName) {
     const headerClassName = isFunction(column.headerClassName)
-      ? column.headerClassName({ field: column.field, colDef: column, api: apiRef })
+      ? column.headerClassName({ field: column.field, colDef: column, api: apiRef.current })
       : column.headerClassName;
 
     classNames.push(headerClassName);

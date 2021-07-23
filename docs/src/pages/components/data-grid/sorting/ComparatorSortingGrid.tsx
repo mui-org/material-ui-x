@@ -22,8 +22,8 @@ const columns: GridColumns = [
         params.getValue(params.id, 'age') || 'x'
       }`,
     sortComparator: (v1, v2, param1, param2) =>
-      param1.api.getCellValue(param1.id, 'age') -
-      param2.api.getCellValue(param2.id, 'age'),
+      (param1.api.getCellValue(param1.id, 'age') as number) -
+      (param2.api.getCellValue(param2.id, 'age') as number),
     width: 150,
   },
   { field: 'dateCreated', type: 'date', width: 180 },
