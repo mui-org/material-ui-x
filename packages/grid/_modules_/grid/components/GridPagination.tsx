@@ -37,6 +37,8 @@ const useStyles = makeStyles(
   { defaultTheme },
 );
 
+let warnedOnce = false;
+
 export const GridPagination = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -79,6 +81,22 @@ export const GridPagination = React.forwardRef<
     };
   };
 
+  const hasPageSizeInRowsPerPageOptions = options.rowsPerPageOptions?.includes(
+    paginationState.pageSize,
+  );
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (options.rowsPerPageOptions && !hasPageSizeInRowsPerPageOptions && !warnedOnce) {
+      console.warn(
+        [
+          `Material-UI: The page size \`${paginationState.pageSize}\` is not preset in the \`rowsPerPageOptions\` prop.`,
+          `Instead, update the \`rowsPerPageOptions\` prop to include this value in the array or remove \`pageSize={${paginationState.pageSize}}\`.`,
+        ].join('\n'),
+      );
+      warnedOnce = true;
+    }
+  }
+
   return (
     // @ts-ignore TODO remove once upgraded v4 support is dropped
     <TablePagination
@@ -92,12 +110,7 @@ export const GridPagination = React.forwardRef<
       component="div"
       count={paginationState.rowCount}
       page={paginationState.page <= lastPage ? paginationState.page : lastPage}
-      rowsPerPageOptions={
-        options.rowsPerPageOptions &&
-        options.rowsPerPageOptions.indexOf(paginationState.pageSize) > -1
-          ? options.rowsPerPageOptions
-          : []
-      }
+      rowsPerPageOptions={hasPageSizeInRowsPerPageOptions ? options.rowsPerPageOptions : []}
       rowsPerPage={paginationState.pageSize}
       {...apiRef!.current.getLocaleText('MuiTablePagination')}
       {...getPaginationChangeHandlers()}
