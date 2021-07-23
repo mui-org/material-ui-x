@@ -2,17 +2,9 @@ import * as React from 'react';
 import {
   createClientRenderStrictMode, // @ts-expect-error need to migrate helpers to TypeScript
   screen,
-  // @ts-expect-error need to migrate helpers to TypeScript
-  fireEvent,
 } from 'test/utils';
 import { expect } from 'chai';
-import { useFakeTimers } from 'sinon';
-import {
-  DataGrid,
-  GridToolbar,
-  GridPreferencePanelsValue,
-  GridLinkOperator,
-} from '@material-ui/data-grid';
+import { DataGrid, GridToolbar, GridPreferencePanelsValue } from '@material-ui/data-grid';
 import { getColumnValues } from 'test/utils/helperFn';
 
 const isJSDOM = /jsdom/.test(window.navigator.userAgent);
@@ -661,16 +653,6 @@ describe('<DataGrid /> - Filter', () => {
   });
 
   describe('singleSelect operators', () => {
-    let clock;
-
-    beforeEach(() => {
-      clock = useFakeTimers();
-    });
-
-    afterEach(() => {
-      clock.restore();
-    });
-
     describe('simple options', () => {
       it('should allow operator is', () => {
         const { setProps } = render(<TestCase value="a" operatorValue="contains" />);
@@ -717,7 +699,7 @@ describe('<DataGrid /> - Filter', () => {
       });
 
       it('should work with numeric values', () => {
-        render(
+        const { setProps } = render(
           <TestCase
             rows={[
               { id: 1, name: 'Hair Dryer', voltage: 220 },
@@ -728,21 +710,18 @@ describe('<DataGrid /> - Filter', () => {
               { field: 'name' },
               { field: 'voltage', type: 'singleSelect', valueOptions: [220, 110] },
             ]}
+            field="voltage"
+            operatorValue="is"
             state={{
               preferencePanel: {
                 open: true,
                 openedPanelValue: GridPreferencePanelsValue.filters,
               },
-              filter: {
-                items: [{ id: 123, columnField: 'voltage', value: '', operatorValue: 'is' }],
-                linkOperator: GridLinkOperator.And,
-              },
             }}
           />,
         );
         expect(getColumnValues()).to.deep.equal(['Hair Dryer', 'Dishwasher', 'Microwave']);
-        fireEvent.change(screen.getByLabelText('Value'), { target: { value: '220' } });
-        clock.tick(600); // Wait for the debounce
+        setProps({ value: 220 });
         expect(getColumnValues()).to.deep.equal(['Hair Dryer', 'Microwave']);
       });
     });
@@ -793,23 +772,20 @@ describe('<DataGrid /> - Filter', () => {
       });
 
       it('should work with numeric values', () => {
-        render(
+        const { setProps } = render(
           <TestCase
+            field="status"
+            operatorValue="is"
             state={{
               preferencePanel: {
                 open: true,
                 openedPanelValue: GridPreferencePanelsValue.filters,
               },
-              filter: {
-                items: [{ id: 123, columnField: 'status', value: '', operatorValue: 'is' }],
-                linkOperator: GridLinkOperator.And,
-              },
             }}
           />,
         );
         expect(getColumnValues()).to.deep.equal(['Nike', 'Adidas', 'Puma']);
-        fireEvent.change(screen.getByLabelText('Value'), { target: { value: '2' } });
-        clock.tick(600);
+        setProps({ value: 2 });
         expect(getColumnValues()).to.deep.equal(['Puma']);
       });
     });
